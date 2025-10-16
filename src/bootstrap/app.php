@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         web: __DIR__ . '/../routes/web.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
+    ->withMiddleware(function(Middleware $middleware) {
         $middleware->web(append: [
             HandleAppearance::class,
             HandleInertiaRequests::class,
@@ -27,5 +27,5 @@ return Application::configure(basePath: dirname(__DIR__))
         AppServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
     ])
-    ->withExceptions(function (Exceptions $exceptions) {})
+    ->withExceptions(function(Exceptions $exceptions) {})
     ->create();
