@@ -17,7 +17,7 @@ ij_visual_guides = 120
 ij_wrap_on_typing = false
 
 [*.php]
-ij_php_align_class_constants = true
+ij_php_align_class_constants = false
 ij_php_align_enum_cases = true
 ij_php_align_key_value_pairs = true
 ij_php_align_match_arm_bodies = true

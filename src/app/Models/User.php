@@ -4,53 +4,65 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Model;
+use Database\Factories\UserFactory;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
 
-final class User extends Authenticatable
+/**
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
+ */
+#[UseFactory(UserFactory::class)]
+final class User extends Model implements
+    AuthenticatableContract,
+    AuthorizableContract,
+    CanResetPasswordContract
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use Authenticatable;
+    use Authorizable;
+    use CanResetPassword;
     use HasFactory;
     use Notifiable;
-    use TwoFactorAuthenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    public const string TABLE = 'core_users';
+
+    public const string ATTRIBUTE_NAME = 'name';
+    public const string ATTRIBUTE_EMAIL = 'email';
+    public const string ATTRIBUTE_PASSWORD = 'password';
+    public const string ATTRIBUTE_REMEMBER_TOKEN = 'remember_token';
+    public const string ATTRIBUTE_RESET_TOKEN = 'token';
+
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        self::ATTRIBUTE_NAME,
+        self::ATTRIBUTE_EMAIL,
+        self::ATTRIBUTE_PASSWORD,
+        self::ATTRIBUTE_REMEMBER_TOKEN,
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
-        'password',
-        'two_factor_secret',
-        'two_factor_recovery_codes',
-        'remember_token',
+        self::ATTRIBUTE_PASSWORD,
+        self::ATTRIBUTE_REMEMBER_TOKEN,
+    ];
+
+    protected $casts = [
+        self::ATTRIBUTE_PASSWORD => 'hashed',
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * @param string $token
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'two_factor_confirmed_at' => 'datetime',
-        ];
-    }
+//    public function sendPasswordResetNotification(#[SensitiveParameter] $token): void // @pest-ignore-type
+//    {
+//        $this->notify(new ResetPasswordNotification($this, $token));
+//    }
 }

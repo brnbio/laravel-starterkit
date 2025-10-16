@@ -29,9 +29,8 @@ final class AuthController
     public function login(LoginRequest $request): RedirectResponse
     {
         if (!$this->attemptLogin($request->validated(), $request->filled('remember'))) {
-            return $this->invalidLogin($request);
+            return $this->invalidLogin();
         }
-        $this->successfulLogin();
 
         return $this->sendLoginResponse($request);
     }
@@ -47,9 +46,7 @@ final class AuthController
 
     public function showRegisterForm(): Response
     {
-        return inertia('auth/register', [
-            'prefixes' => Prefix::options(),
-        ]);
+        return inertia('auth/register');
     }
 
     public function register(RegisterRequest $request): RedirectResponse
@@ -104,10 +101,7 @@ final class AuthController
 
     protected function attemptLogin(array $credentials, bool $remember = false): bool
     {
-        return Auth::guard()->attempt(
-            credentials: array_merge($credentials, [User::ATTRIBUTE_STATUS => true]),
-            remember: $remember,
-        );
+        return Auth::guard()->attempt($credentials, $remember);
     }
 
     protected function sendLoginResponse(LoginRequest $request): RedirectResponse
@@ -117,29 +111,8 @@ final class AuthController
         return redirect()->intended(route('account'));
     }
 
-    protected function successfulLogin(): void
+    protected function invalidLogin(): RedirectResponse
     {
-        auth()->user()?->update([
-            User::ATTRIBUTE_FALSE_LOGINS => 0,
-        ]);
-    }
-
-    protected function invalidLogin(LoginRequest $request): RedirectResponse
-    {
-        $user = User::findByEmail($request->string(User::ATTRIBUTE_EMAIL)->toString());
-        if ($user instanceof User) {
-            $user->false_logins++;
-            $user->save();
-            if ($user->false_logins >= config()->integer('auth.defaults.max_false_logins')) {
-                $user->status = false;
-                $user->save();
-
-                return back()->withErrors([
-                    User::ATTRIBUTE_EMAIL => 'Ihr Account wurde aus Sicherheitsgründen deaktiviert! Bitte wenden Sie sich an unseren Support.',
-                ]);
-            }
-        }
-
         return back()->withErrors([
             User::ATTRIBUTE_EMAIL => 'Anmeldung ungültig.',
         ]);
@@ -152,11 +125,10 @@ final class AuthController
 
         return $broker->reset(
             $request->validated(),
-            function(User $user, string $password) {
+            function (User $user, string $password) {
                 $user->update([
                     User::ATTRIBUTE_PASSWORD       => $password,
                     User::ATTRIBUTE_REMEMBER_TOKEN => Str::random(100),
-                    User::ATTRIBUTE_FALSE_LOGINS   => 0,
                 ]);
                 event(new PasswordReset($user));
                 Auth::guard()->login($user);
