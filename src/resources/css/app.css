@@ -53,6 +53,12 @@
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
     }
+
+    .material-symbols-rounded {
+        font-family: 'Material Symbols Rounded Variable', sans-serif;
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
 }
 
 @layer utilities {

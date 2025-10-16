@@ -108,7 +108,7 @@ final class AuthController
     {
         $request->session()->regenerate();
 
-        return redirect()->intended(route('account'));
+        return redirect()->intended(route('dashboard'));
     }
 
     protected function invalidLogin(): RedirectResponse

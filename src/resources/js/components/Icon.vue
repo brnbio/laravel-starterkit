@@ -1,36 +1,35 @@
 <script setup lang="ts">
-import { cn } from '@/lib/utils';
-import * as icons from 'lucide-vue-next';
-import { computed } from 'vue';
 
-interface Props {
+import { cn } from "@/lib/utils";
+import { computed } from "vue";
+
+const props = withDefaults(defineProps<{
     name: string;
     class?: string;
-    size?: number | string;
-    color?: string;
-    strokeWidth?: number | string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-    class: '',
-    size: 16,
-    strokeWidth: 2,
+    fill?: boolean;
+    weight?: number;
+    grade?: number;
+    opticalSize?: number;
+}>(), {
+    class: "",
+    fill: false,
+    weight: 400,
+    grade: 0,
+    opticalSize: 24
 });
 
-const className = computed(() => cn('h-4 w-4', props.class));
+const className = computed(() => cn("material-symbols-rounded", props.class));
 
-const icon = computed(() => {
-    const iconName = props.name.charAt(0).toUpperCase() + props.name.slice(1);
-    return (icons as Record<string, any>)[iconName];
-});
+const style = computed(() => ({
+    fontVariationSettings: `'FILL' ${ props.fill ? 1 : 0 }, 'wght' ${ props.weight }, 'GRAD' ${ props.grade }, 'opsz' ${ props.opticalSize }`
+}));
+
 </script>
 
 <template>
-    <component
-        :is="icon"
-        :class="className"
-        :size="size"
-        :stroke-width="strokeWidth"
-        :color="color"
-    />
+
+    <span :class="className" :style="style">
+        {{ name }}
+    </span>
+
 </template>

@@ -34,7 +34,7 @@ const toggle = () => {
             </slot>
         </FieldLabel>
         <div class="relative w-full items-center">
-            <Input :id="name" v-bind="$attrs" v-model="form[name]" :placeholder="label" :type="passwordVisible ? 'text': 'password'" />
+            <Input :id="name" v-bind="$attrs" v-model="form[name]" :type="passwordVisible ? 'text': 'password'" />
             <span class="absolute end-0 inset-y-0 flex items-center justify-center px-2 cursor-pointer" @click="toggle">
                 <EyeIcon v-if="!passwordVisible" class="size-5 text-muted-foreground" />
                 <EyeOffIcon v-else class="size-5 text-muted-foreground" />
