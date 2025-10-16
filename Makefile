@@ -1,24 +1,41 @@
+COLOR_GREEN = \033[0;32m
+COLOR_YELLOW = \033[1;33m
+COLOR_END = \033[0m
+
 SAIL := ./vendor/bin/sail
 
-.PHONY: help install precommit dev refresh phpstan pint test eslint
+# Functions for colored output
+define HEADER
+	@echo -e "$(COLOR_YELLOW)$(1)$(COLOR_END)"
+endef
 
-help:
+define COMMAND
+	@echo -e "  $(COLOR_GREEN)$(1)$(COLOR_END)$(2)"
+endef
+
+.PHONY: install precommit dev refresh phpstan pint test eslint
+
+all:
 	@echo ""
-	@echo "install    - Fresh install"
+	$(call HEADER,Usage: )
+	@echo "  make COMMAND"
 	@echo ""
-	@echo "dev        - Start development setup (vite)"
-	@echo "precommit  - Run all pre-commit checks (linting, type checking, tests)"
-	@echo "refresh    - Refresh the database"
+	$(call HEADER,Development commands:)
+	$(call COMMAND,install,    - Fresh install)
+	$(call COMMAND,dev,        - Start development setup (vite))
+	$(call COMMAND,precommit,  - Run all pre-commit checks (linting$(COLOR_END), type checking$(COLOR_END), tests))
+	$(call COMMAND,refresh,    - Refresh the database)
 	@echo ""
-	@echo "phpstan    - Run PHPStan"
-	@echo "pint       - Run Laravel Pint"
-	@echo "test       - Run Pest PHP"
+	$(call HEADER,Backend commands:)
+	$(call COMMAND,phpstan,    - Run PHPStan)
+	$(call COMMAND,pint,       - Run Laravel Pint)
+	$(call COMMAND,test,       - Run Pest PHP)
 	@echo ""
-	@echo "eslint     - Run ESLint"
+	$(call HEADER,Frontend commands:)
+	$(call COMMAND,eslint,     - Run ESLint)
 	@echo ""
 
 install:
-	cp --update=none src/.env.example .env || true
 	cp --update=none src/.env.example src/.env || true
 	$(SAIL) up -d
 	$(SAIL) composer install
