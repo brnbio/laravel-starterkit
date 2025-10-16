@@ -1,26 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Server Side Rendering
-    |--------------------------------------------------------------------------
-    |
-    | These options configure if and how Inertia uses Server Side Rendering
-    | to pre-render every initial visit made to your application's pages
-    | automatically. A separate rendering service should be available.
-    |
-    | See: https://inertiajs.com/server-side-rendering
-    |
-    */
-
-    'ssr' => [
-        'enabled' => true,
-        'url' => 'http://127.0.0.1:13714',
-        // 'bundle' => base_path('bootstrap/ssr/ssr.mjs'),
-    ],
-
     /*
     |--------------------------------------------------------------------------
     | Testing
@@ -39,14 +21,6 @@ return [
             resource_path('js/pages'),
         ],
 
-        'page_extensions' => [
-            'js',
-            'jsx',
-            'svelte',
-            'ts',
-            'tsx',
-            'vue',
-        ],
+        'page_extensions' => ['ts', 'vue'],
     ],
-
 ];
