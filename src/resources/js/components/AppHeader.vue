@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppLogo from '@/components/AppLogo.vue';
+import AppLogo from '@/layouts/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

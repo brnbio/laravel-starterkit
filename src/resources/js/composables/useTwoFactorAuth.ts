@@ -1,13 +1,12 @@
-import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
-import { computed, ref } from 'vue';
+import { computed, ref } from "vue";
 
 const fetchJson = async <T>(url: string): Promise<T> => {
     const response = await fetch(url, {
-        headers: { Accept: 'application/json' },
+        headers: {Accept: "application/json"},
     });
 
     if (!response.ok) {
-        throw new Error(`Failed to fetch: ${response.status}`);
+        throw new Error(`Failed to fetch: ${ response.status }`);
     }
 
     return response.json();
@@ -25,26 +24,26 @@ const hasSetupData = computed<boolean>(
 export const useTwoFactorAuth = () => {
     const fetchQrCode = async (): Promise<void> => {
         try {
-            const { svg } = await fetchJson<{ svg: string; url: string }>(
+            const {svg} = await fetchJson<{ svg: string; url: string }>(
                 qrCode.url(),
             );
 
             qrCodeSvg.value = svg;
         } catch {
-            errors.value.push('Failed to fetch QR code');
+            errors.value.push("Failed to fetch QR code");
             qrCodeSvg.value = null;
         }
     };
 
     const fetchSetupKey = async (): Promise<void> => {
         try {
-            const { secretKey: key } = await fetchJson<{ secretKey: string }>(
+            const {secretKey: key} = await fetchJson<{ secretKey: string }>(
                 secretKey.url(),
             );
 
             manualSetupKey.value = key;
         } catch {
-            errors.value.push('Failed to fetch a setup key');
+            errors.value.push("Failed to fetch a setup key");
             manualSetupKey.value = null;
         }
     };
@@ -72,7 +71,7 @@ export const useTwoFactorAuth = () => {
                 recoveryCodes.url(),
             );
         } catch {
-            errors.value.push('Failed to fetch recovery codes');
+            errors.value.push("Failed to fetch recovery codes");
             recoveryCodesList.value = [];
         }
     };

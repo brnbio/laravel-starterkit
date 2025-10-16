@@ -1,39 +1,60 @@
-import { InertiaLinkProps } from '@inertiajs/vue3';
-import type { LucideIcon } from 'lucide-vue-next';
-
-export interface Auth {
-    user: User;
-}
+import { User } from "@/types/models";
+import { InertiaLinkProps } from "@inertiajs/vue3";
 
 export interface BreadcrumbItem {
     title: string;
     href: string;
 }
 
+export type BreadcrumbItemType = BreadcrumbItem;
+
 export interface NavItem {
     title: string;
-    href: NonNullable<InertiaLinkProps['href']>;
+    href: NonNullable<InertiaLinkProps["href"]>;
     icon?: LucideIcon;
     isActive?: boolean;
+}
+
+export interface FlashMessage {
+    level: "success" | "info" | "warning" | "danger";
+    message: string;
 }
 
 export type AppPageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
-    name: string;
-    quote: { message: string; author: string };
-    auth: Auth;
+    user: User;
     sidebarOpen: boolean;
+    flash: FlashMessage[];
 };
 
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    avatar?: string;
-    email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
+export interface Option {
+    id: number | string;
+    text: string;
 }
 
-export type BreadcrumbItemType = BreadcrumbItem;
+export interface BackedEnum {
+    value: number | string;
+    name: string;
+    text: string;
+}
+
+export interface Paginator<T = any> {
+    current_page: number;
+    data: T[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
+}

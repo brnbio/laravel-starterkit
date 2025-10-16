@@ -14,6 +14,7 @@ final class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'user'        => $request->user(),
+            'flash'       => fn() => session('flash_notification', collect())->values()->toArray(),
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }
