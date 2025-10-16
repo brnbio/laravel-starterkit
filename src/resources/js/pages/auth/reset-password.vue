@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
-import { Heading, Section } from "@/components";
+import { Heading } from "@/components";
 import { FormControl, FormPassword } from "@/components/forms";
 import { Button } from "@/components/ui/button";
 import { FieldDescription, FieldGroup, FieldSet } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
-import { AppLayout } from "@/layouts";
+import { GuestLayout } from "@/layouts";
 import { useForm } from "@inertiajs/vue3";
 import { provide } from "vue";
 
@@ -24,7 +24,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("password.store", [props.token]), {
+    form.post(route("password.store", [ props.token ]), {
         onFinish: () => {
             form.reset("password", "password_confirmation");
         },
@@ -37,28 +37,27 @@ provide("form", form);
 
 <template>
 
-    <AppLayout :title>
-        <Section>
+    <GuestLayout :title>
+        <div class="flex flex-col gap-8">
             <Heading :title />
-            <form @submit.prevent="submit" class="w-1/2">
+            <form @submit.prevent="submit">
                 <FieldSet>
                     <FieldDescription>
                         Bitte geben Sie Ihr neues Passwort zweimal ein. Das Passwort muss mindestens 8 Zeichen lang sein.
                     </FieldDescription>
                     <FieldGroup>
-                        <FormControl name="email" label="E-Mail-Adresse" readonly disabled />
                         <FormPassword name="password" label="Neues Passwort" />
                         <FormPassword name="password_confirmation" label="Neues Passwort bestätigen" />
                         <div>
                             <Button type="submit" :disabled="form.processing">
-                                <Spinner v-if="form.processing" />
                                 Passwort speichern
+                                <Spinner v-if="form.processing" />
                             </Button>
                         </div>
                     </FieldGroup>
                 </FieldSet>
             </form>
-        </Section>
-    </AppLayout>
+        </div>
+    </GuestLayout>
 
 </template>

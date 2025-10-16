@@ -1,21 +1,25 @@
 <x-mail::message>
 
 @if (! empty($greeting))
-    # {{ $greeting }}
+# {{ $greeting }}
+@else
+# @lang('Hallo!')
 @endif
 
 @foreach ($introLines as $line)
-    {{ $line }}
+{{ $line }}
+
 @endforeach
 
 @isset($actionText)
-    <x-mail::button :url="$actionUrl" :color="$level ?? 'primary'">
-        {{ $actionText }}
-    </x-mail::button>
+<x-mail::button :url="$actionUrl" :color="$level ?? 'primary'">
+{{ $actionText }}
+</x-mail::button>
 @endisset
 
 @foreach ($outroLines as $line)
-    {{ $line }}
+{{ $line }}
+
 @endforeach
 
 <p>

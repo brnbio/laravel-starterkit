@@ -10,8 +10,8 @@ export type BreadcrumbItemType = BreadcrumbItem;
 
 export interface NavItem {
     title: string;
-    href: NonNullable<InertiaLinkProps["href"]>;
-    icon?: LucideIcon;
+    href: string;
+    icon?: string;
     isActive?: boolean;
 }
 

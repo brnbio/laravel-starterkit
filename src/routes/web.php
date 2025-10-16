@@ -18,19 +18,21 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [Controllers\AuthController::class, 'register']);
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/', fn () => inertia('Dashboard'))->name('dashboard');
-    //    Route::get ('/verify-email', EmailVerificationPromptController::class)->name('verification.notice');
-//    Route::get ('/verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
-//    Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
-
+Route::middleware('auth')->group(function ()
+{
+    Route::get ('/', Controllers\DashboardController::class)->name('dashboard');
     Route::post('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
 
-    Route::get   ('/account', Controllers\AccountController::class)->name('account');
+    Route::get ('/account', Controllers\AccountController::class)->name('account');
 //    Route::patch ('/account/profile', [ProfileController::class, 'update'])->name('profile.update');
 //    Route::delete('/account/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 //    Route::get   ('/account/password', [PasswordController::class, 'edit'])->name('password.edit');
 //    Route::put   ('/account/password', [PasswordController::class, 'update'])->middleware('throttle:6,1')->name('password.update');
 //    Route::get   ('/account/two-factor', [TwoFactorAuthenticationController::class, 'show'])->name('two-factor.show');
 //    Route::get   ('/account/appearance', fn () => Inertia::render('settings/Appearance'))->name('appearance.edit');
+
+    //    Route::get ('/verify-email', EmailVerificationPromptController::class)->name('verification.notice');
+//    Route::get ('/verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+//    Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
+
 });

@@ -1,18 +1,28 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/app/AppSidebarLayout.vue';
-import type { BreadcrumbItemType } from '@/types';
 
-interface Props {
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar, AppSidebarHeader } from "@/layouts/components";
+import type { BreadcrumbItemType } from "@/types";
+import { usePage } from "@inertiajs/vue3";
+
+withDefaults(defineProps<{
     breadcrumbs?: BreadcrumbItemType[];
-}
-
-withDefaults(defineProps<Props>(), {
+}>(), {
     breadcrumbs: () => [],
 });
+
+const isOpen: boolean = usePage().props.sidebarOpen;
+
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
-        <slot />
-    </AppLayout>
+
+    <SidebarProvider :default-open="isOpen">
+        <AppSidebar />
+        <SidebarInset class="overflow-x-hidden">
+            <AppSidebarHeader :breadcrumbs />
+            <slot />
+        </SidebarInset>
+    </SidebarProvider>
+
 </template>

@@ -238,6 +238,7 @@ small {
 }
 
 .button-blue,
+.button-info,
 .button-primary {
     background-color: #003366FF;
     border-bottom: 8px solid #003366FF;
