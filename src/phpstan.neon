@@ -1,0 +1,18 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+
+    paths:
+        - app/
+
+    level: max
+
+    ignoreErrors:
+        - identifier: trait.unused
+        - identifier: missingType.generics
+        - identifier: missingType.iterableValue
+        - '#Cannot cast mixed to string#'
+        - '#Cannot cast mixed to int#'
+        - '#Cannot cast mixed to float#'
