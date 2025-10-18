@@ -1,16 +1,14 @@
 <script setup lang="ts">
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar, AppSidebarHeader } from "@/layouts/components";
+import { AppSidebar, AppSidebarHeader, FlashMessages } from "@/layouts/components";
 import type { BreadcrumbItemType } from "@/types";
 import { Head, usePage } from "@inertiajs/vue3";
 
-withDefaults(defineProps<{
+defineProps<{
     title?: string;
     breadcrumbs?: BreadcrumbItemType[];
-}>(), {
-    breadcrumbs: () => [],
-});
+}>();
 
 const isOpen: boolean = usePage().props.sidebarOpen;
 
@@ -28,5 +26,6 @@ const isOpen: boolean = usePage().props.sidebarOpen;
             </main>
         </SidebarInset>
     </SidebarProvider>
+    <FlashMessages />
 
 </template>

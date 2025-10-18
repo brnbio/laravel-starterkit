@@ -1,12 +1,15 @@
 <script setup lang="ts">
 
 import { Toaster } from "@/components/ui/sonner";
+import { useAppearance } from "@/composables/useAppearance";
 import type { FlashMessage } from "@/types/index.d";
 import { usePage } from "@inertiajs/vue3";
 import { onMounted, watch } from "vue";
 import { toast } from "vue-sonner";
 
 const page = usePage();
+
+const { appearance } = useAppearance();
 
 function showFlashMessages(messages: FlashMessage[] | null | undefined) {
     messages?.forEach((message) => {
@@ -44,6 +47,6 @@ watch(
 
 <template>
 
-    <Toaster rich-colors :expand="true" position="top-right" />
+    <Toaster rich-colors :expand="true" position="bottom-right" :theme="appearance" />
 
 </template>
