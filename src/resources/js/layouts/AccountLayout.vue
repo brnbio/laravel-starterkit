@@ -22,13 +22,13 @@ const sidebarNavItems: NavItem[] = [
         identifier: "password",
     },
     {
-        title: "Two-Factor Auth",
-        href: "#",
+        title: "2-Faktor-Authentifizierung",
+        href: route("account.2fa"),
         identifier: "two-factor-auth",
     },
     {
         title: "Appearance",
-        href: "#",
+        href: route("account.appearance"),
         identifier: "appearance",
     },
 ];
@@ -39,7 +39,7 @@ const sidebarNavItems: NavItem[] = [
 
     <Heading title="Mein Konto" description="Verwalten Sie die Einstellungen Ihres persönlichen Kontos" />
     <div class="flex flex-col lg:flex-row gap-8">
-        <aside class="w-full max-w-xl lg:w-48">
+        <aside class="w-full max-w-xl lg:w-56">
             <nav class="flex flex-col">
                 <Button
                     v-for="(item, index) in sidebarNavItems"

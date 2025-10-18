@@ -64,6 +64,6 @@ final class AccountController
 
     public function appearance(): Response
     {
-        return inertia('account/show');
+        return inertia('account/appearance');
     }
 }
