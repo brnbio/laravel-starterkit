@@ -11,6 +11,6 @@ final class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::factory()->count(10)->create();
+        User::factory()->state([User::ATTRIBUTE_EMAIL => 'john.doe@example.org'])->create();
     }
 }

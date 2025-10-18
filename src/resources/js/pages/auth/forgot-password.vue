@@ -31,7 +31,7 @@ provide("form", form);
             <form @submit.prevent="submit">
                 <FieldSet>
                     <FieldDescription>
-                        Bitte geben Sie Ihren Benutzernamen oder Ihre E-Mail-Adresse ein. Anweisungen zum
+                        Bitte geben Sie Ihre E-Mail-Adresse ein. Anweisungen zum
                         Zurücksetzen Ihres Passworts werden Ihnen umgehend per E-Mail zugesandt.
                     </FieldDescription>
                     <FieldGroup>

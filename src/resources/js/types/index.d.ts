@@ -1,5 +1,4 @@
 import { User } from "@/types/models";
-import { InertiaLinkProps } from "@inertiajs/vue3";
 
 export interface BreadcrumbItem {
     title: string;
@@ -13,6 +12,7 @@ export interface NavItem {
     href: string;
     icon?: string;
     isActive?: boolean;
+    identifier?: string;
 }
 
 export interface FlashMessage {

@@ -16,7 +16,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 <template>
 
-    <AppLayout :breadcrumbs>
+    <AppLayout :breadcrumbs :title>
         <Heading :title />
     </AppLayout>
 

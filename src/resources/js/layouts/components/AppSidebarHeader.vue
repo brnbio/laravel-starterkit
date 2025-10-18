@@ -74,7 +74,7 @@ const { getInitials } = useInitials();
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem as-child>
-                        <Link :href="route('account')" class="flex w-full cursor-pointer items-center gap-2">
+                        <Link :href="route('account.edit')" class="flex w-full cursor-pointer items-center gap-2">
                             <Icon name="account_box" />
                             Mein Konto
                         </Link>
