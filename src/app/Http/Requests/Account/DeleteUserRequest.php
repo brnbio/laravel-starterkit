@@ -14,7 +14,7 @@ final class DeleteUserRequest extends FormRequest
         return [
             User::ATTRIBUTE_PASSWORD => [
                 'required',
-                'current_password:',
+                'current_password',
             ],
         ];
     }

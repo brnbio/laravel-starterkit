@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Account\DeleteUserRequest;
 use App\Http\Requests\Account\ProfileUpdateRequest;
+use App\Http\Requests\Account\UpdatePasswordRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
@@ -43,12 +44,17 @@ final class AccountController
 
     public function editPassword(): Response
     {
-        return inertia('account/show');
+        return inertia('account/editPassword');
     }
 
-    public function updatePassword(): Response
+    public function updatePassword(UpdatePasswordRequest $request): RedirectResponse
     {
-        return inertia('account/show');
+        $request->user()->update([
+            User::ATTRIBUTE_PASSWORD => $request->validated(User::ATTRIBUTE_PASSWORD),
+        ]);
+        flash()->success('Ihr Passwort wurde erfolgreich aktualisiert.');
+
+        return to_route('account.password');
     }
 
     public function twoFactorAuthentication(): Response

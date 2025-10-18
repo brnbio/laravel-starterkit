@@ -26,8 +26,8 @@ Route::middleware('auth')->group(function ()
     Route::get   ('/account', [Controllers\AccountController::class, 'edit'])->name('account.edit');
     Route::patch ('/account', [Controllers\AccountController::class, 'update'])->name('account.update');
     Route::delete('/account', [Controllers\AccountController::class, 'destroy'])->name('account.destroy');
-    Route::get   ('/account/password', [Controllers\AccountController::class, 'edit'])->name('account.password');
-    Route::put   ('/account/password', [Controllers\AccountController::class, 'update'])->middleware('throttle:6,1')->name('account.password.update');
+    Route::get   ('/account/password', [Controllers\AccountController::class, 'editPassword'])->name('account.password');
+    Route::patch ('/account/password', [Controllers\AccountController::class, 'updatePassword'])->middleware('throttle:6,1')->name('account.password.update');
     Route::get   ('/account/two-factor', [Controllers\AccountController::class, 'twoFactorAuthentication'])->name('account.two-factor-authentication');
     Route::get   ('/account/appearance', [Controllers\AccountController::class, 'appearance'])->name('account.appearance');
 

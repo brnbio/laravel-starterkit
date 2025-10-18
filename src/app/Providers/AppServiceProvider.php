@@ -32,6 +32,6 @@ final class AppServiceProvider extends ServiceProvider
         Number::useLocale('de');
         Number::useCurrency('EUR');
         JsonResource::withoutWrapping();
-        Password::defaults(fn() => Password::min(8)->mixedCase()->numbers()->symbols());
+        Password::defaults(fn() => Password::min(8)->max(48)->mixedCase()->numbers()->symbols());
     }
 }

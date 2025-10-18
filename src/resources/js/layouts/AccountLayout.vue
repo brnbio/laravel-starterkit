@@ -7,18 +7,18 @@ import { type NavItem } from "@/types";
 import { Link } from "@inertiajs/vue3";
 
 defineProps<{
-    active: string;
+    active: "account" | "password" | "two-factor-auth" | "appearance";
 }>();
 
 const sidebarNavItems: NavItem[] = [
     {
         title: "Persönliche Daten",
-        href: "#",
+        href: route("account.edit"),
         identifier: "account",
     },
     {
-        title: "Password",
-        href: "#",
+        title: "Passwort",
+        href: route("account.password"),
         identifier: "password",
     },
     {

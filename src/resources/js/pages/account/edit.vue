@@ -7,8 +7,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { FieldGroup, FieldSet } from "@/components/ui/field";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
-import { AppLayout } from "@/layouts";
-import AccountLayout from "@/layouts/AccountLayout.vue";
+import { AccountLayout, AppLayout } from "@/layouts";
 import { type BreadcrumbItem } from "@/types";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
 
