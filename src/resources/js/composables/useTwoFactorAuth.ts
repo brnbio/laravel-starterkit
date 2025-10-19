@@ -2,7 +2,7 @@ import { computed, ref } from "vue";
 
 const fetchJson = async <T>(url: string): Promise<T> => {
     const response = await fetch(url, {
-        headers: {Accept: "application/json"},
+        headers: { Accept: "application/json" },
     });
 
     if (!response.ok) {
@@ -24,10 +24,7 @@ const hasSetupData = computed<boolean>(
 export const useTwoFactorAuth = () => {
     const fetchQrCode = async (): Promise<void> => {
         try {
-            const {svg} = await fetchJson<{ svg: string; url: string }>(
-                qrCode.url(),
-            );
-
+            const { svg } = await fetchJson<{ svg: string; url: string }>(route("two-factor.qr-code"));
             qrCodeSvg.value = svg;
         } catch {
             errors.value.push("Failed to fetch QR code");
@@ -37,10 +34,7 @@ export const useTwoFactorAuth = () => {
 
     const fetchSetupKey = async (): Promise<void> => {
         try {
-            const {secretKey: key} = await fetchJson<{ secretKey: string }>(
-                secretKey.url(),
-            );
-
+            const { secretKey: key } = await fetchJson<{ secretKey: string }>(route("two-factor.secret-key"));
             manualSetupKey.value = key;
         } catch {
             errors.value.push("Failed to fetch a setup key");
@@ -67,9 +61,7 @@ export const useTwoFactorAuth = () => {
     const fetchRecoveryCodes = async (): Promise<void> => {
         try {
             clearErrors();
-            recoveryCodesList.value = await fetchJson<string[]>(
-                recoveryCodes.url(),
-            );
+            recoveryCodesList.value = await fetchJson<string[]>(route("two-factor.recovery-codes"));
         } catch {
             errors.value.push("Failed to fetch recovery codes");
             recoveryCodesList.value = [];
@@ -79,7 +71,7 @@ export const useTwoFactorAuth = () => {
     const fetchSetupData = async (): Promise<void> => {
         try {
             clearErrors();
-            await Promise.all([fetchQrCode(), fetchSetupKey()]);
+            await Promise.all([ fetchQrCode(), fetchSetupKey() ]);
         } catch {
             qrCodeSvg.value = null;
             manualSetupKey.value = null;

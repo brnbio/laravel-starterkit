@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Model;
 use Database\Factories\UserFactory;
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 
 /**
  * @property string $name
@@ -32,7 +34,9 @@ final class User extends Model implements
     use Authorizable;
     use CanResetPassword;
     use HasFactory;
+    //    use MustVerifyEmail;
     use Notifiable;
+    use TwoFactorAuthenticatable;
 
     public const string TABLE = 'core_users';
 
@@ -61,8 +65,8 @@ final class User extends Model implements
     /**
      * @param string $token
      */
-//    public function sendPasswordResetNotification(#[SensitiveParameter] $token): void // @pest-ignore-type
-//    {
-//        $this->notify(new ResetPasswordNotification($this, $token));
-//    }
+    //    public function sendPasswordResetNotification(#[SensitiveParameter] $token): void // @pest-ignore-type
+    //    {
+    //        $this->notify(new ResetPasswordNotification($this, $token));
+    //    }
 }

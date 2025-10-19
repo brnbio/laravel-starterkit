@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Account\DeleteUserRequest;
 use App\Http\Requests\Account\ProfileUpdateRequest;
+use App\Http\Requests\Account\TwoFactorAuthenticationRequest;
 use App\Http\Requests\Account\UpdatePasswordRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -20,11 +21,13 @@ final class AccountController
 
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
-        if ($request->user()->isDirty(User::ATTRIBUTE_EMAIL)) {
-            $request->user()->email_verified_at = null;
+        /** @var User $user */
+        $user = $request->user();
+        $user->fill($request->validated());
+        if ($user->isDirty(User::ATTRIBUTE_EMAIL)) {
+            $user->email_verified_at = null;
         }
-        $request->user()->save();
+        $user->save();
         flash()->success('Ihre Daten wurden erfolgreich aktualisiert.');
 
         return to_route('account.edit');
@@ -32,6 +35,7 @@ final class AccountController
 
     public function destroy(DeleteUserRequest $request): RedirectResponse
     {
+        /** @var User $user */
         $user = $request->user();
         auth()->logout();
         $user->delete();
@@ -49,7 +53,9 @@ final class AccountController
 
     public function updatePassword(UpdatePasswordRequest $request): RedirectResponse
     {
-        $request->user()->update([
+        /** @var User $user */
+        $user = $request->user();
+        $user->update([
             User::ATTRIBUTE_PASSWORD => $request->validated(User::ATTRIBUTE_PASSWORD),
         ]);
         flash()->success('Ihr Passwort wurde erfolgreich aktualisiert.');
@@ -57,9 +63,13 @@ final class AccountController
         return to_route('account.password');
     }
 
-    public function twoFactorAuthentication(): Response
+    public function twoFactorAuthentication(TwoFactorAuthenticationRequest $request): Response
     {
-        return inertia('account/show');
+        $request->ensureStateIsValid();
+
+        return inertia('account/2fa', [
+            'twoFactorEnabled' => $request->user()?->hasEnabledTwoFactorAuthentication(),
+        ]);
     }
 
     public function appearance(): Response

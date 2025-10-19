@@ -12,6 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: route("dashboard"),
     },
 ];
+
 </script>
 
 <template>

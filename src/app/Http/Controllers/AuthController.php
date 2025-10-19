@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ForgotPasswordRequest;
-use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Models\User;
@@ -21,20 +20,6 @@ use Inertia\Response;
 
 final class AuthController
 {
-    public function showLoginForm(): Response
-    {
-        return inertia('auth/login');
-    }
-
-    public function login(LoginRequest $request): RedirectResponse
-    {
-        if (!$this->attemptLogin($request->validated(), $request->filled('remember'))) {
-            return $this->invalidLogin();
-        }
-
-        return $this->sendLoginResponse($request);
-    }
-
     public function logout(Request $request): RedirectResponse
     {
         Auth::guard()->logout();
@@ -96,26 +81,7 @@ final class AuthController
         }
         flash()->success('Passwort erfolgreich zurückgesetzt.');
 
-        return to_route('account');
-    }
-
-    protected function attemptLogin(array $credentials, bool $remember = false): bool
-    {
-        return Auth::guard()->attempt($credentials, $remember);
-    }
-
-    protected function sendLoginResponse(LoginRequest $request): RedirectResponse
-    {
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard'));
-    }
-
-    protected function invalidLogin(): RedirectResponse
-    {
-        return back()->withErrors([
-            User::ATTRIBUTE_EMAIL => 'Anmeldung ungültig.',
-        ]);
+        return to_route('dashboard');
     }
 
     protected function resetPassword(ResetPasswordRequest $request): string
@@ -125,7 +91,7 @@ final class AuthController
 
         return $broker->reset(
             $request->validated(),
-            function (User $user, string $password) {
+            function(User $user, string $password) {
                 $user->update([
                     User::ATTRIBUTE_PASSWORD       => $password,
                     User::ATTRIBUTE_REMEMBER_TOKEN => Str::random(100),

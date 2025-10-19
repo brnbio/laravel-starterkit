@@ -10,9 +10,5 @@ parameters:
     level: max
 
     ignoreErrors:
-        - identifier: trait.unused
         - identifier: missingType.generics
         - identifier: missingType.iterableValue
-        - '#Cannot cast mixed to string#'
-        - '#Cannot cast mixed to int#'
-        - '#Cannot cast mixed to float#'
