@@ -42,7 +42,7 @@ final class AuthController
         $request->session()->regenerate();
         flash()->success('Ihr Account wurde erfolgreich erstellt. Herzlich willkommen!');
 
-        return to_route('account');
+        return to_route('account.edit');
     }
 
     public function showForgotPasswordForm(): Response
