@@ -1,23 +1,42 @@
-# Entwicklungs-Kontext
+# Development Context
 
 ## Tech Stack
 
-**Backend**: PHP 8.4 • Laravel 12 • Inertia.js • Laravel Fortify • Spatie Media Library • Pest v4 • PHPStan (max level) • Pint
+**Backend**
+- PHP 8.4
+- Laravel v12
+- Inertia.js v2
+- Laravel Fortify
+- Spatie Media Library
+- Pest v4
+- PHPStan (max level)
+- Pint with Larastan
 
-**Frontend**: Vue 3 (Composition API) • TypeScript (strict) • Vite • Tailwind CSS v4 • Reka UI • Lucide Icons • VueUse • Ziggy • ESLint
+**Frontend**
+- Vue 3 (Composition API)
+- TypeScript (strict)
+- Vite
+- Tailwind CSS v4
+- shadcn/vue
+- Material Symbols & Icons (as font) 
+- Ziggy
+- ESLint
 
-**Services**: MySQL 8.0 • MinIO (S3) • Mailpit
+**Services**
+- MySQL 8.0
+- MinIO (S3)
+- Mailpit
 
-## Entwicklungs-Workflow
+## Development Workflow
 
-### 🚨 Grundregeln
+### 🚨 Core Rules
 
-1. **Alle Befehle vom Projekt-Root ausführen** - NIEMALS `cd src/`
-2. **Laravel Sail für alle Befehle verwenden** - Keine direkten Host-Befehle
-3. **Makefile nutzen** - `make test` statt `./vendor/bin/sail test`
-4. **Code-Qualität prüfen** - `make precommit` vor jedem Commit
+1. **Execute all commands from project root** - NEVER `cd src/`
+2. **Use Laravel Sail for all commands** - No direct host commands
+3. **Use Makefile** - `make test` instead of `./vendor/bin/sail test`
+4. **Check code quality** - `make precommit` before every commit
 
-### Make-Befehle
+### Make Commands
 
 **Container**:
 ```bash
@@ -26,8 +45,8 @@ make up / down / restart
 
 **Development**:
 ```bash
-make dev         # Vite Dev-Server
-make refresh     # DB reset mit Seeds
+make dev         # Vite Dev Server
+make refresh     # DB reset with Seeds
 ```
 
 **Code Quality**:
@@ -36,10 +55,10 @@ make pint        # PHP Code Formatter
 make phpstan     # Static Analysis
 make eslint      # Frontend Linter
 make test        # Pest Tests
-make precommit   # Alle Checks
+make precommit   # All Checks
 ```
 
-## Projektstruktur
+## Project Structure
 
 ```
 src/
@@ -64,16 +83,16 @@ src/
 
 **Standards**: Laravel PER • Strict Types • 100% Type Coverage • PHPStan Level max
 
-**Regeln**:
-- `declare(strict_types=1);` in jeder Datei
+**Rules**:
+- `declare(strict_types=1);` in every file
 - Short Array Syntax `[]`
 - Single Quotes `'string'`
-- Vollständige Type Hints (Parameter + Return Types)
-- PHPDoc nur bei zusätzlicher Information
-- **Helper-Funktionen vor Facades**: `inertia()`, `auth()`, `view()`, `redirect()`, `response()`, `request()`, `route()`, `session()`, `config()`, `cache()`
-- Inertia Page Names lowercase (z.B. `users/index` statt `Users/Index`)
+- Complete Type Hints (Parameters + Return Types)
+- PHPDoc only for additional information
+- **Helper functions over Facades**: `inertia()`, `auth()`, `view()`, `redirect()`, `response()`, `request()`, `route()`, `session()`, `config()`, `cache()`
+- Inertia Page Names lowercase (e.g. `users/index` instead of `Users/Index`)
 
-**Beispiel**:
+**Example**:
 ```php
 <?php
 
@@ -85,7 +104,7 @@ final class UserController
 {
     public function index()
     {
-        // ✅ Helpers verwenden
+        // ✅ Use helpers
         return inertia('users/index', [
             'user' => auth()->user(),
             'config' => config('app.name'),
@@ -94,7 +113,7 @@ final class UserController
 
     public function store()
     {
-        // ✅ Nicht: Auth::user(), Config::get(), Redirect::route()
+        // ✅ Not: Auth::user(), Config::get(), Redirect::route()
         return redirect()->route('users.index');
     }
 }
@@ -104,19 +123,19 @@ final class UserController
 
 **Standards**: TypeScript strict • Vue 3 Composition API • ESLint
 
-**ESLint-Regeln**:
+**ESLint Rules**:
 - Block Order: `<script>` → `<template>` → `<style>`
-- Immer `<script setup lang="ts">`
+- Always `<script setup lang="ts">`
 - 4 Spaces Indentation
 - Object Spacing: `{ foo: 'bar' }`
-- Max 8 Attribute inline, sonst 1 pro Zeile
-- Leerzeile zwischen Blöcken
+- Max 8 attributes inline, otherwise 1 per line
+- Empty line between blocks
 
 **Path Aliases**:
 - `@/*` → `./resources/js/*`
 - `ziggy-js` → Vendor
 
-**Komponenten-Struktur**:
+**Component Structure**:
 ```vue
 <script setup lang="ts">
 import { ref, computed } from 'vue'
@@ -220,13 +239,13 @@ it('creates a user', function (): void {
 });
 ```
 
-**Befehle**:
+**Commands**:
 ```bash
-make test                                      # Alle Tests
-./vendor/bin/sail test --filter=UserTest      # Spezifischer Test
+make test                                      # All Tests
+./vendor/bin/sail test --filter=UserTest      # Specific Test
 ```
 
-## Häufige Artisan-Befehle
+## Common Artisan Commands
 
 ```bash
 ./vendor/bin/sail artisan make:model Example -m       # Model + Migration
@@ -237,7 +256,7 @@ make refresh                                           # DB reset + seed
 
 ## Environment
 
-**Wichtige .env-Variablen**:
+**Important .env Variables**:
 ```bash
 APP_PORT=80
 VITE_PORT=5173
@@ -247,26 +266,26 @@ MAIL_HOST=mailpit           # Mailpit (localhost:8025)
 ```
 
 **Debugging**:
-- Laravel Debugbar aktiviert (Development)
-- Xdebug über `SAIL_XDEBUG_MODE` in `.env`
+- Laravel Debugbar enabled (Development)
+- Xdebug via `SAIL_XDEBUG_MODE` in `.env`
 
-## Claude Code Hinweise
+## Claude Code Notes
 
 **Workflow**:
-- Verwende Makefile-Befehle (`make test`, `make precommit`)
-- Alle Befehle vom Projekt-Root ausführen (NIEMALS `cd src/`)
-- `make precommit` vor jedem Commit
+- Use Makefile commands (`make test`, `make precommit`)
+- Execute all commands from project root (NEVER `cd src/`)
+- `make precommit` before every commit
 
-**Code-Generierung**:
-- PHP: `declare(strict_types=1);`, vollständige Type Hints, PHPStan Level max, Helper-Funktionen statt Facades
-- Vue: `<script setup lang="ts">`, typisierte Props/Emits
-- Folge Pint/ESLint-Regeln strikt
+**Code Generation**:
+- PHP: `declare(strict_types=1);`, complete Type Hints, PHPStan Level max, Helper functions instead of Facades
+- Vue: `<script setup lang="ts">`, typed Props/Emits
+- Follow Pint/ESLint rules strictly
 
 **Testing**:
-- Pest-Tests für alle PHP-Änderungen
-- 100% Type Coverage erforderlich
-- `make test` vor Commits
+- Pest tests for all PHP changes
+- 100% Type Coverage required
+- `make test` before commits
 
-**Dateipfade**:
+**File Paths**:
 - Backend: `src/app/...`
 - Frontend: `src/resources/js/...`

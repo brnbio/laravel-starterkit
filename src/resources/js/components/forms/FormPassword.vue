@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
+import { Icon } from "@/components";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { InertiaForm } from "@inertiajs/vue3";
-import { EyeIcon, EyeOffIcon } from "lucide-vue-next";
 import { inject, ref } from "vue";
 
 defineOptions({
@@ -37,8 +37,8 @@ const toggle = () => {
         <div class="relative w-full items-center">
             <Input :id="name" v-bind="$attrs" v-model="form[name]" :type="passwordVisible ? 'text': 'password'" />
             <span class="absolute end-0 inset-y-0 flex items-center justify-center px-2 cursor-pointer" @click="toggle">
-                <EyeIcon v-if="!passwordVisible" class="size-5 text-muted-foreground" />
-                <EyeOffIcon v-else class="size-5 text-muted-foreground" />
+                <Icon v-if="passwordVisible" name="visibility_off" class="text-muted-foreground" />
+                <Icon v-else name="visibility" class="text-muted-foreground" />
             </span>
         </div>
         <FieldDescription v-if="description">

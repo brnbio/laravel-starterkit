@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
-import { Loader2Icon } from "lucide-vue-next"
-import { cn } from "@/lib/utils"
+
+import { Icon } from "@/components";
+import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from "vue";
 
 const props = defineProps<{
-  class?: HTMLAttributes["class"]
-}>()
+    class?: HTMLAttributes["class"]
+}>();
+
 </script>
 
 <template>
-  <Loader2Icon
-    role="status"
-    aria-label="Loading"
-    :class="cn('size-4 animate-spin', props.class)"
-  />
+
+    <span :class="cn('inline-flex self-start animate-spin', props.class)" role="status" aria-label="Loading">
+        <Icon name="progress_activity" />
+    </span>
+
 </template>
