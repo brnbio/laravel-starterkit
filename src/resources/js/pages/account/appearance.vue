@@ -66,7 +66,7 @@ const tabs: AppearanceTab[] = [
                         </ItemDescription>
                     </ItemContent>
                     <ItemActions>
-                        <Button variant="outline" size="sm" @click="updateAppearance(tab.value)" v-if="appearance !== tab.value">
+                        <Button v-if="appearance !== tab.value" variant="outline" size="sm" @click="updateAppearance(tab.value)">
                             Auswählen
                         </Button>
                     </ItemActions>

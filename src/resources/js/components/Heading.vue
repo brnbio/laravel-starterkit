@@ -13,8 +13,10 @@ defineProps<{
         <h2 class="text-xl font-semibold tracking-tight">
             {{ title }}
         </h2>
-        <div v-if="description" class="text-sm text-muted-foreground">
-            {{ description }}
+        <div v-if="description || $slots.description" class="text-sm text-muted-foreground">
+            <slot name="description">
+                {{ description }}
+            </slot>
         </div>
     </div>
 

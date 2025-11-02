@@ -14,8 +14,8 @@ createInertiaApp({
             `./pages/${ name }.vue`,
             import.meta.glob<DefineComponent>("./pages/**/*.vue"),
         ),
-    setup({el, App, props, plugin}) {
-        createApp({render: () => h(App, props)}).use(plugin).use(ZiggyVue).mount(el);
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) }).use(plugin).use(ZiggyVue).mount(el);
     },
     progress: {
         color: "#4B5563",

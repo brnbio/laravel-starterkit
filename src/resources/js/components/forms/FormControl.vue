@@ -2,6 +2,7 @@
 
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { InertiaForm } from "@inertiajs/vue3";
 import { inject } from "vue";
 
 defineOptions({
@@ -15,7 +16,7 @@ defineProps<{
     description?: string;
 }>();
 
-const form: any = inject("form");
+const form = inject<InertiaForm<any>>("form");
 
 </script>
 

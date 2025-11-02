@@ -69,5 +69,5 @@ export function useAppearance() {
         updateTheme(value);
     }
 
-    return {appearance, updateAppearance};
+    return { appearance, updateAppearance };
 }

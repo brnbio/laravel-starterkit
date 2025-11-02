@@ -34,7 +34,7 @@ const regenerate = () => {
         onSuccess: () => {
             fetchRecoveryCodes();
         },
-    })
+    });
 };
 
 onMounted(async () => {
@@ -53,9 +53,7 @@ onUnmounted(() => {
 
     <AppLayout :breadcrumbs :title>
         <AccountLayout active="two-factor-auth">
-
             <HeadingSmall title="Zwei-Faktor-Authentifizierung" description="Verwalten Sie Ihre Authentifizierungseinstellungen" />
-
             <div v-if="!twoFactorEnabled" class="flex flex-col gap-4">
                 <Badge variant="destructive">
                     Nicht aktiv
@@ -75,7 +73,6 @@ onUnmounted(() => {
                     </Button>
                 </Form>
             </div>
-
             <div v-else class="flex flex-col gap-4">
                 <Badge variant="success">
                     Aktiv
@@ -114,9 +111,7 @@ onUnmounted(() => {
                     </Button>
                 </section>
             </div>
-
             <TwoFactorSetupModal v-model:is-open="showSetupModal" :two-factor-enabled />
-
         </AccountLayout>
     </AppLayout>
 

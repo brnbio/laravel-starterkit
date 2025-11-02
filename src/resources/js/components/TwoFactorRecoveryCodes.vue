@@ -54,7 +54,7 @@ onMounted(async () => {
             <div
                 class="flex flex-col gap-3 select-none sm:flex-row sm:items-center sm:justify-between"
             >
-                <Button @click="toggleRecoveryCodesVisibility" class="w-fit">
+                <Button class="w-fit" @click="toggleRecoveryCodesVisibility">
                     <component
                         :is="isRecoveryCodesVisible ? EyeOff : Eye"
                         class="size-4"
@@ -65,11 +65,11 @@ onMounted(async () => {
 
                 <Form
                     v-if="isRecoveryCodesVisible && recoveryCodesList.length"
+                    v-slot="{ processing }"
                     v-bind="regenerateRecoveryCodes.form()"
                     method="post"
                     :options="{ preserveScroll: true }"
                     @success="fetchRecoveryCodes"
-                    #default="{ processing }"
                 >
                     <Button
                         variant="secondary"
@@ -101,11 +101,11 @@ onMounted(async () => {
                                 v-for="n in 8"
                                 :key="n"
                                 class="h-4 animate-pulse rounded bg-muted-foreground/20"
-                            ></div>
+                            />
                         </div>
                         <div
-                            v-else
                             v-for="(code, index) in recoveryCodesList"
+                            v-else
                             :key="index"
                         >
                             {{ code }}
@@ -115,7 +115,9 @@ onMounted(async () => {
                         Each recovery code can be used once to access your
                         account and will be removed after use. If you need more,
                         click
-                        <span class="font-bold">Regenerate Codes</span> above.
+                        <span class="font-bold">
+                            Regenerate Codes
+                        </span> above.
                     </p>
                 </div>
             </div>

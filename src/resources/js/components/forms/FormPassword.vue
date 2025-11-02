@@ -2,6 +2,7 @@
 
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { InertiaForm } from "@inertiajs/vue3";
 import { EyeIcon, EyeOffIcon } from "lucide-vue-next";
 import { inject, ref } from "vue";
 
@@ -15,7 +16,7 @@ defineProps<{
     description?: string;
 }>();
 
-const form: any = inject("form");
+const form = inject<InertiaForm<any>>("form");
 
 const passwordVisible = ref(false);
 

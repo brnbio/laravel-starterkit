@@ -10,8 +10,6 @@ final class DashboardController
 {
     public function __invoke(): Response
     {
-        flash()->success('Welcome back!');
-
         return inertia('dashboard');
     }
 }

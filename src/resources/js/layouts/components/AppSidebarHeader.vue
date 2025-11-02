@@ -3,21 +3,12 @@
 import { Icon } from "@/components";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
-import { SidebarMenuButton, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useInitials } from "@/composables/useInitials";
 import { Breadcrumbs } from "@/layouts/components/index";
 import type { BreadcrumbItemType } from "@/types";
 import { Link, usePage } from "@inertiajs/vue3";
-import { ChevronsUpDown, LogOut, Settings } from "lucide-vue-next";
 
 withDefaults(
     defineProps<{
@@ -31,26 +22,19 @@ withDefaults(
 const page = usePage();
 const user = page.props.user;
 
-const { isMobile, state } = useSidebar();
 const { getInitials } = useInitials();
 
 </script>
 
 <template>
 
-    <header
-        class="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-sidebar-border/70 px-6 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4"
-    >
+    <header class="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-sidebar-border/70 px-6 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4">
         <div class="flex items-center gap-2">
-
             <SidebarTrigger class="-ml-1" />
-
             <template v-if="breadcrumbs && breadcrumbs.length > 0">
                 <Breadcrumbs :breadcrumbs="breadcrumbs" />
             </template>
-
         </div>
-
         <DropdownMenu :modal="false">
             <DropdownMenuTrigger as-child>
                 <Button variant="ghost" size="icon" class="group cursor-pointer aspect-square">

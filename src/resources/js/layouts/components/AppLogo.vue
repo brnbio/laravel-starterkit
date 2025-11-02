@@ -1,8 +1,10 @@
 <script setup lang="ts">
 
-defineProps<{
+withDefaults(defineProps<{
     height?: number;
-}>();
+}>(), {
+    height: 40,
+});
 
 </script>
 

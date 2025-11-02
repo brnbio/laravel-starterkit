@@ -3,6 +3,7 @@
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { Option } from "@/types";
+import { InertiaForm } from "@inertiajs/vue3";
 import { computed, inject } from "vue";
 
 defineOptions({
@@ -25,7 +26,7 @@ const props = withDefaults(
         placeholder: "Bitte auswählen"
     });
 
-const form: any = inject("form");
+const form = inject<InertiaForm<any>>("form");
 
 const getValue = (obj: any, path: string): any => {
     return path.split(".").reduce((acc, key) => acc?.[key], obj);

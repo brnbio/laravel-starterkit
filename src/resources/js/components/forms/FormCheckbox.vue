@@ -2,6 +2,7 @@
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldContent, FieldDescription, FieldLabel } from "@/components/ui/field";
+import { InertiaForm } from "@inertiajs/vue3";
 import { inject } from "vue";
 
 defineOptions({
@@ -14,7 +15,7 @@ defineProps<{
     description?: string;
 }>();
 
-const form: any = inject("form");
+const form = inject<InertiaForm<any>>("form");
 
 </script>
 

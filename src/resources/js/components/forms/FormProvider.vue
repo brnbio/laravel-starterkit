@@ -1,9 +1,10 @@
 <script setup lang="ts">
 
+import { InertiaForm } from "@inertiajs/vue3";
 import { provide } from "vue";
 
 const props = defineProps<{
-    form: any;
+    form: InertiaForm<any>;
 }>();
 
 provide("form", props.form);
