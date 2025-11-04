@@ -1,24 +1,24 @@
-# Laravel Starter Kit
+# Laravel Starter Kit 🚀
 
 A modern Laravel starter kit with InertiaJS, Vue 3, Tailwind CSS, and Laravel Sail pre-configured for rapid application development.
 
-## Features
+## ✨ Features
 
 - **Laravel** - Latest version with best practices
 - **InertiaJS** - Modern monolith approach for SPAs
 - **Vue 3** - Progressive JavaScript framework with Composition API
 - **Tailwind CSS** - Utility-first CSS framework
 - **Laravel Sail** - Docker development environment
-- **Makefile helpers** - Convenient commands for common tasks
+-  **Makefile helpers** - Convenient commands for common tasks
 
-## Requirements
+## 📋 Requirements
 
 - docker
 - git
 - php 8.4
 - composer
 
-## Installation
+## 📥 Installation
 
 Create a new project using Composer:
 
@@ -57,7 +57,7 @@ make dev
 
 Your application will be available at `http://localhost`.
 
-## Makefile Commands
+## ⚡ Makefile Commands
 
 Run `make` to see all available commands:
 
@@ -80,18 +80,8 @@ Run `make` to see all available commands:
 ### Frontend Commands
 - `make eslint` - Run ESLint linting
 
-## Using Laravel Sail Directly
 
-You can also use Laravel Sail commands directly:
-
-```bash
-./vendor/bin/sail artisan migrate
-./vendor/bin/sail composer require package/name
-./vendor/bin/sail npm install package-name
-./vendor/bin/sail test
-```
-
-## Development Workflow
+## 💻 Development Workflow
 
 1. Start the application: `make up`
 2. Start Vite dev server: `make dev`
@@ -99,7 +89,7 @@ You can also use Laravel Sail commands directly:
 4. Run pre-commit checks: `make precommit`
 5. Commit your changes
 
-## License
+## 📄 License
 
 This project is open-sourced software licensed under the [MIT license](LICENSE).
 
