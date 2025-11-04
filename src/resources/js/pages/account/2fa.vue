@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
-import { HeadingSmall, Icon } from "@/components";
+import { HeadingSmall } from "@/components";
 import TwoFactorSetupModal from "@/components/TwoFactorSetupModal.vue";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useTwoFactorAuth } from "@/composables/useTwoFactorAuth";
 import { AccountLayout, AppLayout } from "@/layouts";
 import { type BreadcrumbItem } from "@/types";
+import { CachedRounded, SafetyCheckOffOutline, ShieldLockOutline } from "@brnbio/vue-material-design-icons";
 import { Form, Link, router } from "@inertiajs/vue3";
 import { onMounted, onUnmounted, ref } from "vue";
 
@@ -63,12 +64,12 @@ onUnmounted(() => {
                     Diese PIN kann über eine TOTP-kompatible App auf Ihrem Smartphone abgerufen werden.
                 </p>
                 <Button v-if="hasSetupData" class="self-start" @click="showSetupModal = true">
-                    <Icon name="shield_lock" />
+                    <ShieldLockOutline />
                     Einrichtung fortsetzen
                 </Button>
                 <Form v-else v-slot="{ processing }" :action="route('two-factor.enable')" method="post" @success="showSetupModal = true">
                     <Button type="submit" :disabled="processing">
-                        <Icon name="shield_lock" />
+                        <ShieldLockOutline />
                         2FA aktivieren
                     </Button>
                 </Form>
@@ -85,7 +86,7 @@ onUnmounted(() => {
                     <div class="flex justify-between items-center">
                         <HeadingSmall title="Wiederherstellungscodes" />
                         <Button variant="ghost" class="text-muted-foreground hover:text-foreground" @click.prevent="regenerate">
-                            <Icon name="cached" />
+                            <CachedRounded />
                         </Button>
                     </div>
                     <div class="bg-gray-200 dark:bg-gray-800 rounded p-4 flex flex-col gap-1">
@@ -105,7 +106,7 @@ onUnmounted(() => {
                     />
                     <Button variant="destructive" as-child class="self-start">
                         <Link :href="route('two-factor.disable')" method="delete">
-                            <Icon name="safety_check_off" />
+                            <SafetyCheckOffOutline />
                             Deaktivieren
                         </Link>
                     </Button>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
-import Icon from "@/components/Icon.vue";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, } from "@/components/ui/dialog";
 import { Field, FieldDescription, FieldGroup, FieldSeparator, FieldSet } from "@/components/ui/field";
 import { InputGroup, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
 import { PinInput, PinInputGroup, PinInputSlot } from "@/components/ui/pin-input";
 import { useTwoFactorAuth } from "@/composables/useTwoFactorAuth";
+import { CheckRounded, ContentCopyOutline } from "@brnbio/vue-material-design-icons";
 import { Form } from "@inertiajs/vue3";
 import { useClipboard } from "@vueuse/core";
 import { computed, ref, watch } from "vue";
@@ -105,8 +105,8 @@ watch(() => isOpen.value, async (isOpen) => {
                         <InputGroup>
                             <InputGroupInput :value="manualSetupKey" />
                             <InputGroupButton @click="copy(manualSetupKey || '')">
-                                <Icon v-if="copied" name="check" />
-                                <Icon v-else name="content_copy" />
+                                <CheckRounded v-if="copied" />
+                                <ContentCopyOutline v-else />
                             </InputGroupButton>
                         </InputGroup>
                     </InputGroup>

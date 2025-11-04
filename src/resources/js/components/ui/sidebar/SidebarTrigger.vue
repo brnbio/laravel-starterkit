@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-import { Icon } from "@/components";
 import { Button } from "@/components/ui/button";
+import { ThumbnailBarOutline } from "@brnbio/vue-material-design-icons";
 import type { HTMLAttributes } from "vue";
 import { useSidebar } from "./utils";
 
@@ -16,7 +16,7 @@ const { toggleSidebar } = useSidebar();
 <template>
 
     <Button data-sidebar="trigger" data-slot="sidebar-trigger" variant="ghost" size="icon" :class="props.class" @click="toggleSidebar">
-        <Icon name="thumbnail_bar" />
+        <ThumbnailBarOutline />
         <span class="sr-only">Toggle Sidebar</span>
     </Button>
 

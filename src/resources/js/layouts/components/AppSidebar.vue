@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { Icon } from "@/components";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { AppLogo } from "@/layouts/components";
 import { type NavItem } from "@/types";
@@ -47,7 +46,6 @@ const footerNavItems: NavItem[] = [
                     <SidebarMenuItem v-for="item in mainNavItems" :key="item.title">
                         <SidebarMenuButton as-child :tooltip="item.title">
                             <Link :href="item.href">
-                                <Icon v-if="item.icon" :name="item.icon" />
                                 <span>
                                     {{ item.title }}
                                 </span>
@@ -64,7 +62,6 @@ const footerNavItems: NavItem[] = [
                         <SidebarMenuItem v-for="item in footerNavItems" :key="item.title">
                             <SidebarMenuButton class="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100" as-child>
                                 <a :href="item.href" target="_blank" rel="noopener noreferrer">
-                                    <Icon v-if="item.icon" :name="item.icon" />
                                     <span>
                                         {{ item.title }}
                                     </span>

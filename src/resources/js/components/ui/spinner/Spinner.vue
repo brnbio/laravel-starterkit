@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-import { Icon } from "@/components";
 import { cn } from "@/lib/utils";
+import { ProgressActivity } from "@brnbio/vue-material-design-icons";
 import type { HTMLAttributes } from "vue";
 
 const props = defineProps<{
@@ -13,7 +13,7 @@ const props = defineProps<{
 <template>
 
     <span :class="cn('inline-flex self-start animate-spin', props.class)" role="status" aria-label="Loading">
-        <Icon name="progress_activity" />
+        <ProgressActivity />
     </span>
 
 </template>

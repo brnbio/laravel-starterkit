@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import { Heading } from "@/components";
+import { Spinner } from "@/components/ui/spinner";
 import AppLayout from "@/layouts/AppLayout.vue";
 import { type BreadcrumbItem } from "@/types";
 
@@ -19,6 +20,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout :breadcrumbs :title>
         <Heading :title />
+        <Spinner />
     </AppLayout>
 
 </template>

@@ -2,6 +2,7 @@
 
 import { Icon } from "@/components";
 import { cn } from "@/lib/utils";
+import { KeyboardArrowDown } from "@brnbio/vue-material-design-icons";
 import { NavigationMenuTrigger, type NavigationMenuTriggerProps, useForwardProps, } from "reka-ui";
 import { computed, type HTMLAttributes } from "vue";
 import { navigationMenuTriggerStyle } from ".";
@@ -22,7 +23,7 @@ const forwardedProps = useForwardProps(delegatedProps);
 
     <NavigationMenuTrigger data-slot="navigation-menu-trigger" v-bind="forwardedProps" :class="cn(navigationMenuTriggerStyle(), 'group', props.class)">
         <slot />
-        <Icon name="keyboard_arrow_down" class="relative top-[1px] ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180" aria-hidden="true" />
+        <KeyboardArrowDown class="relative top-[1px] ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180" aria-hidden="true" />
     </NavigationMenuTrigger>
 
 </template>
