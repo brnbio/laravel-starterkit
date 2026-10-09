@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -13,7 +14,7 @@ final class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'user'        => $request->user(),
+            'user'        => fn() => $request->user()?->only(User::ATTRIBUTE_NAME, User::ATTRIBUTE_EMAIL),
             'flash'       => fn() => session('flash_notification', []),
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];

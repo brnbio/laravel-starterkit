@@ -2,7 +2,7 @@ COLOR_GREEN = \033[0;32m
 COLOR_YELLOW = \033[1;33m
 COLOR_END = \033[0m
 
-SAIL := ./vendor/bin/sail
+SAIL ?= ./vendor/bin/sail
 
 # Functions for colored output
 define HEADER
