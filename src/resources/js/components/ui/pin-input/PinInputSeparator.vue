@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { CheckIndeterminateSmall } from "@brnbio/vue-material-design-icons";
 import type { PrimitiveProps } from "reka-ui";
 import { Primitive, useForwardProps } from "reka-ui";
 
@@ -13,7 +12,7 @@ const forwardedProps = useForwardProps(props);
 
     <Primitive data-slot="pin-input-separator" v-bind="forwardedProps">
         <slot>
-            <CheckIndeterminateSmall />
+            <IconMaterialSymbolsCheckIndeterminateSmall />
         </slot>
     </Primitive>
 

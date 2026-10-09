@@ -1,10 +1,8 @@
 <script setup lang="ts">
 
-import { Heading } from "@/components";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { type NavItem } from "@/types";
 import { Link } from "@inertiajs/vue3";
+import account from "@/types/wayfinder/routes/account";
 
 defineProps<{
     active: "account" | "password" | "two-factor-auth" | "appearance";
@@ -13,22 +11,22 @@ defineProps<{
 const sidebarNavItems: NavItem[] = [
     {
         title: "Persönliche Daten",
-        href: route("account.edit"),
+        href: account.edit.url(),
         identifier: "account",
     },
     {
         title: "Passwort",
-        href: route("account.password"),
+        href: account.password.url(),
         identifier: "password",
     },
     {
         title: "2-Faktor-Authentifizierung",
-        href: route("account.2fa"),
+        href: account.twoFactor.url(),
         identifier: "two-factor-auth",
     },
     {
         title: "Appearance",
-        href: route("account.appearance"),
+        href: account.appearance.url(),
         identifier: "appearance",
     },
 ];

@@ -1,12 +1,8 @@
 <script setup lang="ts">
 
-import { Heading } from "@/components";
-import { FormControl, FormProvider } from "@/components/forms";
-import { Button } from "@/components/ui/button";
-import { FieldDescription, FieldGroup, FieldSet } from "@/components/ui/field";
-import { Spinner } from "@/components/ui/spinner";
-import { GuestLayout } from "@/layouts";
 import { Link, useForm } from "@inertiajs/vue3";
+import password from "@/types/wayfinder/routes/password";
+import { login } from "@/types/wayfinder/routes";
 
 const title = "Passwort vergessen";
 
@@ -15,7 +11,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("password.email"));
+    form.post(password.email.url());
 };
 
 </script>
@@ -40,7 +36,7 @@ const submit = () => {
                                     Neues Passwort anfordern
                                 </Button>
                                 <Button as-child variant="ghost" class="text-gray-400">
-                                    <Link :href="route('login')" class="grow-0">
+                                    <Link :href="login()" class="grow-0">
                                         Zurück zum Login
                                     </Link>
                                 </Button>

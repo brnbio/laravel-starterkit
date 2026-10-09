@@ -1,14 +1,27 @@
-import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
+import { defineConfig } from "eslint/config";
 import vue from "eslint-plugin-vue";
+import tseslint from "typescript-eslint";
 
-export default defineConfigWithVueTs(
+export default defineConfig(
+    tseslint.configs.recommended,
     vue.configs["flat/recommended"],
-    vueTsConfigs.recommended,
+    {
+        files: [ "**/*.vue" ],
+        languageOptions: {
+            parserOptions: {
+                parser: tseslint.parser,
+                extraFileExtensions: [ ".vue" ],
+                sourceType: "module",
+            },
+        },
+    },
     {
         ignores: [
             "node_modules",
             "public",
             "resources/js/components/ui/*",
+            "resources/js/types/wayfinder",
+            "resources/js/types/components.d.ts",
             "tailwind.config.js",
             "tests",
             "vendor",

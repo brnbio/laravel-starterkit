@@ -1,12 +1,7 @@
 <script setup lang="ts">
 
-import { Heading } from "@/components";
-import { FormPassword, FormProvider } from "@/components/forms";
-import { Button } from "@/components/ui/button";
-import { FieldDescription, FieldGroup, FieldSet } from "@/components/ui/field";
-import { Spinner } from "@/components/ui/spinner";
-import { GuestLayout } from "@/layouts";
 import { useForm } from "@inertiajs/vue3";
+import password from "@/types/wayfinder/routes/password";
 
 const props = defineProps<{
     email: string;
@@ -23,7 +18,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("password.store", [ props.token ]), {
+    form.post(password.store.url(), {
         onFinish: () => {
             form.reset("password", "password_confirmation");
         },

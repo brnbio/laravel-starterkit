@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import { InertiaForm } from "@inertiajs/vue3";
 import { inject } from "vue";
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { KeyboardArrowDown } from "@brnbio/vue-material-design-icons";
 import type { SelectTriggerProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
@@ -25,7 +24,7 @@ const forwardedProps = useForwardProps(delegatedProps)
   >
     <slot />
     <SelectIcon as-child>
-        <KeyboardArrowDown class="w-4 h-4 opacity-50 shrink-0" />
+        <IconMaterialSymbolsKeyboardArrowDown class="w-4 h-4 opacity-50 shrink-0" />
     </SelectIcon>
   </SelectTrigger>
 </template>

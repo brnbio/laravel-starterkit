@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import { cn } from "@/lib/utils";
-import { CloseRounded } from "@brnbio/vue-material-design-icons";
 import { DialogClose, DialogContent, type DialogContentEmits, type DialogContentProps, DialogOverlay, DialogPortal, useForwardPropsEmits, } from "reka-ui";
 import { computed, type HTMLAttributes } from "vue";
 
@@ -35,7 +34,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
             >
                 <slot />
                 <DialogClose class="absolute top-6 right-6 p-0.5 transition-colors rounded-md hover:bg-secondary">
-                    <CloseRounded />
+                    <IconMaterialSymbolsCloseRounded />
                     <span class="sr-only">Close</span>
                 </DialogClose>
             </DialogContent>

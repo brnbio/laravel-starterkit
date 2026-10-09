@@ -1,8 +1,5 @@
 <script setup lang="ts">
 
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { VisibilityOffOutline, VisibilityOutline } from "@brnbio/vue-material-design-icons";
 import { InertiaForm } from "@inertiajs/vue3";
 import { inject, ref } from "vue";
 
@@ -37,8 +34,8 @@ const toggle = () => {
         <div class="relative w-full items-center">
             <Input :id="name" v-bind="$attrs" v-model="form[name]" :type="passwordVisible ? 'text': 'password'" />
             <span class="absolute end-0 inset-y-0 flex items-center justify-center px-2 cursor-pointer" @click="toggle">
-                <VisibilityOffOutline v-if="passwordVisible" :size="16" class="text-muted-foreground" />
-                <VisibilityOutline v-else :size="16" class="text-muted-foreground" />
+                <IconMaterialSymbolsVisibilityOffOutline v-if="passwordVisible" class="size-4 text-muted-foreground" />
+                <IconMaterialSymbolsVisibilityOutline v-else class="size-4 text-muted-foreground" />
             </span>
         </div>
         <FieldDescription v-if="description">

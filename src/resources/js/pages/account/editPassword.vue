@@ -1,19 +1,15 @@
 <script setup lang="ts">
 
-import { FormPassword, FormProvider } from "@/components/forms";
-import { Button } from "@/components/ui/button";
-import { FieldGroup, FieldSet } from "@/components/ui/field";
-import { Spinner } from "@/components/ui/spinner";
-import { AccountLayout, AppLayout } from "@/layouts";
 import { type BreadcrumbItem } from "@/types";
 import { useForm } from "@inertiajs/vue3";
+import account from "@/types/wayfinder/routes/account";
 
 const title = "Mein Konto";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: title,
-        href: route("account.password"),
+        href: account.password.url(),
     },
 ];
 
@@ -23,7 +19,7 @@ const form = useForm({
     password_confirmation: null,
 });
 
-const submit = () => form.patch(route("account.password.update"), {
+const submit = () => form.patch(account.password.update.url(), {
     onSuccess: () => {
         form.reset();
         form.clearErrors();

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { KeyboardArrowDown } from "@brnbio/vue-material-design-icons";
 import type { SelectScrollDownButtonProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
@@ -16,7 +15,7 @@ const forwardedProps = useForwardProps(delegatedProps)
 <template>
   <SelectScrollDownButton v-bind="forwardedProps" :class="cn('flex cursor-default items-center justify-center py-1', props.class)">
     <slot>
-      <KeyboardArrowDown class="h-4 w-4" />
+      <IconMaterialSymbolsKeyboardArrowDown class="h-4 w-4" />
     </slot>
   </SelectScrollDownButton>
 </template>

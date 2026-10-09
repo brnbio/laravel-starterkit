@@ -1,15 +1,10 @@
 <script setup lang="ts">
 
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, } from "@/components/ui/dialog";
-import { Field, FieldDescription, FieldGroup, FieldSeparator, FieldSet } from "@/components/ui/field";
-import { InputGroup, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
-import { PinInput, PinInputGroup, PinInputSlot } from "@/components/ui/pin-input";
 import { useTwoFactorAuth } from "@/composables/useTwoFactorAuth";
-import { CheckRounded, ContentCopyOutline } from "@brnbio/vue-material-design-icons";
 import { Form } from "@inertiajs/vue3";
 import { useClipboard } from "@vueuse/core";
 import { computed, ref, watch } from "vue";
+import twoFactor from "@/types/wayfinder/routes/two-factor";
 
 interface ModalConfig {
     title: string;
@@ -105,8 +100,8 @@ watch(() => isOpen.value, async (isOpen) => {
                         <InputGroup>
                             <InputGroupInput :value="manualSetupKey" />
                             <InputGroupButton @click="copy(manualSetupKey || '')">
-                                <CheckRounded v-if="copied" />
-                                <ContentCopyOutline v-else />
+                                <IconMaterialSymbolsCheckRounded v-if="copied" />
+                                <IconMaterialSymbolsContentCopyOutline v-else />
                             </InputGroupButton>
                         </InputGroup>
                     </InputGroup>
@@ -115,7 +110,14 @@ watch(() => isOpen.value, async (isOpen) => {
                     </Button>
                 </FieldSet>
                 <template v-else>
-                    <Form v-slot="{ errors, processing }" :action="route('two-factor.confirm')" method="post" @finish="code = []" @success="isOpen = false">
+                    <Form
+                        v-slot="{ errors, processing }"
+                        :action="twoFactor.confirm()"
+                        method="post"
+                        error-bag="confirmTwoFactorAuthentication"
+                        @finish="code = []"
+                        @success="isOpen = false"
+                    >
                         <FieldSet>
                             <input type="hidden" name="code" :value="codeValue">
                             <FieldGroup>
@@ -125,8 +127,8 @@ watch(() => isOpen.value, async (isOpen) => {
                                             <PinInputSlot v-for="(id, index) in 6" :key="id" :index :disabled="processing" />
                                         </PinInputGroup>
                                     </PinInput>
-                                    <FieldDescription v-show="errors?.confirmTwoFactorAuthentication?.code" class="text-sm text-red-600 dark:text-red-500">
-                                        {{ errors?.confirmTwoFactorAuthentication?.code }}
+                                    <FieldDescription v-show="errors.code" class="text-sm text-red-600 dark:text-red-500">
+                                        {{ errors.code }}
                                     </FieldDescription>
                                 </Field>
                                 <div class="flex gap-2">

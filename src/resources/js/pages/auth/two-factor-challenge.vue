@@ -1,12 +1,8 @@
 <script setup lang="ts">
 
-import { Button } from "@/components/ui/button";
-import { Field, FieldDescription, FieldGroup, FieldLegend, FieldSet } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { PinInput, PinInputGroup, PinInputSlot } from "@/components/ui/pin-input";
-import { GuestLayout } from "@/layouts";
 import { Form } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
+import twoFactor from "@/types/wayfinder/routes/two-factor";
 
 const title = "Zwei-Faktor-Authentifizierung";
 
@@ -29,7 +25,7 @@ const toggle = (clearErrors: () => void): void => {
     <GuestLayout :title>
         <div class="flex flex-col gap-8">
             <template v-if="showRecoveryInput">
-                <Form v-slot="{ errors, processing, clearErrors }" :action="route('two-factor.login.store')" method="post">
+                <Form v-slot="{ errors, processing, clearErrors }" :action="twoFactor.login.store()" method="post">
                     <FieldSet>
                         <FieldLegend variant="legend">
                             Wiederherstellungscode eingeben
@@ -55,7 +51,7 @@ const toggle = (clearErrors: () => void): void => {
                 </Form>
             </template>
             <template v-else>
-                <Form v-slot="{ errors, processing, clearErrors }" :action="route('two-factor.login.store')" method="post" @error="code = []">
+                <Form v-slot="{ errors, processing, clearErrors }" :action="twoFactor.login.store()" method="post" @error="code = []">
                     <FieldSet>
                         <input type="hidden" name="code" :value="codeValue">
                         <FieldLegend variant="legend">

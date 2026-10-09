@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { Option } from "@/types";
 import { InertiaForm } from "@inertiajs/vue3";
 import { computed, inject } from "vue";

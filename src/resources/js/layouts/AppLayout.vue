@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar, AppSidebarHeader, FlashMessages } from "@/layouts/components";
 import type { BreadcrumbItemType } from "@/types";
 import { Head, usePage } from "@inertiajs/vue3";
 

@@ -9,9 +9,9 @@
         "laravel/fortify": "^v1.41.0",
         "laravel/framework": "^v13.35.0",
         "laravel/tinker": "^v3.0.2",
+        "laravel/wayfinder": "^0.1.21",
         "league/flysystem-aws-s3-v3": "^3.35.3",
-        "spatie/laravel-medialibrary": "^11.23.9",
-        "tightenco/ziggy": "^v2.6.4"
+        "spatie/laravel-medialibrary": "^11.23.9"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^v4.4.4",

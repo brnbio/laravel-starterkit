@@ -1,10 +1,7 @@
 <script setup lang="ts">
 
-import { Heading } from "@/components";
-import { FormControl, FormPassword, FormProvider, FormSubmit } from "@/components/forms";
-import { FieldGroup, FieldSet } from "@/components/ui/field";
-import { GuestLayout } from "@/layouts";
 import { Link, useForm } from "@inertiajs/vue3";
+import { login, register } from "@/types/wayfinder/routes";
 
 const title = "Registrierung";
 
@@ -15,7 +12,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("register"));
+    form.post(register.url());
 };
 
 </script>
@@ -39,7 +36,7 @@ const submit = () => {
             </FormProvider>
             <div>
                 Sie haben bereits einen Account?
-                <Link :href="route('login')" class="font-bold text-primary">
+                <Link :href="login()" class="font-bold text-primary">
                     Jetzt anmelden
                 </Link>
             </div>

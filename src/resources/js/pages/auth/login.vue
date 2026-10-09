@@ -1,10 +1,9 @@
 <script setup lang="ts">
 
-import { Heading } from "@/components";
-import { FormControl, FormPassword, FormProvider, FormSubmit } from "@/components/forms";
-import { FieldGroup } from "@/components/ui/field";
-import { GuestLayout } from "@/layouts";
 import { Link, useForm } from "@inertiajs/vue3";
+import login from "@/types/wayfinder/routes/login";
+import password from "@/types/wayfinder/routes/password";
+import { register } from "@/types/wayfinder/routes";
 
 const title = "Anmeldung";
 
@@ -15,7 +14,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route("login"));
+    form.post(login.store.url());
 };
 
 </script>
@@ -32,7 +31,7 @@ const submit = () => {
                         <FormPassword name="password" required>
                             <template #label>
                                 Passwort
-                                <Link :href="route('password.request')" class="text-sm underline text-gray-500" tabindex="-1">
+                                <Link :href="password.request()" class="text-sm underline text-gray-500" tabindex="-1">
                                     Passwort vergessen?
                                 </Link>
                             </template>
@@ -43,7 +42,7 @@ const submit = () => {
             </FormProvider>
             <div>
                 Sie haben noch keinen Account?
-                <Link :href="route('register')" class="font-bold text-primary">
+                <Link :href="register()" class="font-bold text-primary">
                     Jetzt registrieren
                 </Link>
             </div>

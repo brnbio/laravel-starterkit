@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-import { Checkbox } from "@/components/ui/checkbox";
-import { Field, FieldContent, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { InertiaForm } from "@inertiajs/vue3";
 import { inject } from "vue";
 

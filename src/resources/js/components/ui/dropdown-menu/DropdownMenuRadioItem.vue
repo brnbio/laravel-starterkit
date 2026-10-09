@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import { cn } from "@/lib/utils";
-import { CircleOutline } from "@brnbio/vue-material-design-icons";
 import {
     DropdownMenuItemIndicator,
     DropdownMenuRadioItem,
@@ -34,7 +33,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     >
     <span class="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
         <DropdownMenuItemIndicator>
-            <CircleOutline class="size-2 fill-current" />
+            <IconMaterialSymbolsCircleOutline class="size-2 fill-current" />
         </DropdownMenuItemIndicator>
     </span>
         <slot />

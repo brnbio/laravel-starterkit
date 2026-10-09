@@ -1,15 +1,16 @@
 <script setup lang="ts">
 
-import { Button } from "@/components/ui/button";
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle, } from "@/components/ui/item";
 import { useAppearance } from "@/composables/useAppearance";
-import { AccountLayout, AppLayout } from "@/layouts";
 import { type BreadcrumbItem } from "@/types";
-import { DarkModeOutline, IconComponent, LightModeOutline, ScreenshotMonitorOutline } from "@brnbio/vue-material-design-icons";
+import type { Component } from "vue";
+import IconDarkModeOutline from "~icons/material-symbols/dark-mode-outline";
+import IconLightModeOutline from "~icons/material-symbols/light-mode-outline";
+import IconScreenshotMonitorOutline from "~icons/material-symbols/screenshot-monitor-outline";
+import account from "@/types/wayfinder/routes/account";
 
 interface AppearanceTab {
     value: "light" | "dark" | "system";
-    icon: IconComponent;
+    icon: Component;
     label: string;
     description?: string;
 }
@@ -19,7 +20,7 @@ const title = "Mein Konto";
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: title,
-        href: route("account.appearance"),
+        href: account.appearance.url(),
     },
 ];
 
@@ -28,19 +29,19 @@ const { appearance, updateAppearance } = useAppearance();
 const tabs: AppearanceTab[] = [
     {
         value: "system",
-        icon: ScreenshotMonitorOutline,
+        icon: IconScreenshotMonitorOutline,
         label: "Auto",
         description: "Das System-Farbschema nutzen"
     },
     {
         value: "light",
-        icon: LightModeOutline,
+        icon: IconLightModeOutline,
         label: "Hell",
         description: "Das helle Farbschema nutzen"
     },
     {
         value: "dark",
-        icon: DarkModeOutline,
+        icon: IconDarkModeOutline,
         label: "Dunkel",
         description: "Das dunkle Farbschema nutzen"
     },

@@ -1,15 +1,11 @@
 <script setup lang="ts">
 
-import { HeadingSmall } from "@/components";
-import TwoFactorSetupModal from "@/components/TwoFactorSetupModal.vue";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { useTwoFactorAuth } from "@/composables/useTwoFactorAuth";
-import { AccountLayout, AppLayout } from "@/layouts";
 import { type BreadcrumbItem } from "@/types";
-import { CachedRounded, SafetyCheckOffOutline, ShieldLockOutline } from "@brnbio/vue-material-design-icons";
 import { Form, Link, router } from "@inertiajs/vue3";
 import { onMounted, onUnmounted, ref } from "vue";
+import account from "@/types/wayfinder/routes/account";
+import twoFactor from "@/types/wayfinder/routes/two-factor";
 
 const props = defineProps<{
     twoFactorEnabled: boolean;
@@ -20,7 +16,7 @@ const title = "Mein Konto";
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: title,
-        href: route("account.2fa"),
+        href: account.twoFactor.url(),
     },
 ];
 
@@ -29,7 +25,7 @@ const { hasSetupData, clearTwoFactorAuthData, recoveryCodesList, fetchRecoveryCo
 const showSetupModal = ref<boolean>(false);
 
 const regenerate = () => {
-    router.visit(route("two-factor.regenerate-recovery-codes"), {
+    router.visit(twoFactor.regenerateRecoveryCodes.url(), {
         method: "post",
         preserveScroll: true,
         onSuccess: () => {
@@ -64,12 +60,12 @@ onUnmounted(() => {
                     Diese PIN kann über eine TOTP-kompatible App auf Ihrem Smartphone abgerufen werden.
                 </p>
                 <Button v-if="hasSetupData" class="self-start" @click="showSetupModal = true">
-                    <ShieldLockOutline />
+                    <IconMaterialSymbolsShieldLockOutline />
                     Einrichtung fortsetzen
                 </Button>
-                <Form v-else v-slot="{ processing }" :action="route('two-factor.enable')" method="post" @success="showSetupModal = true">
+                <Form v-else v-slot="{ processing }" :action="twoFactor.enable()" method="post" @success="showSetupModal = true">
                     <Button type="submit" :disabled="processing">
-                        <ShieldLockOutline />
+                        <IconMaterialSymbolsShieldLockOutline />
                         2FA aktivieren
                     </Button>
                 </Form>
@@ -86,7 +82,7 @@ onUnmounted(() => {
                     <div class="flex justify-between items-center">
                         <HeadingSmall title="Wiederherstellungscodes" />
                         <Button variant="ghost" class="text-muted-foreground hover:text-foreground" @click.prevent="regenerate">
-                            <CachedRounded />
+                            <IconMaterialSymbolsCachedRounded />
                         </Button>
                     </div>
                     <div class="bg-gray-200 dark:bg-gray-800 rounded p-4 flex flex-col gap-1">
@@ -105,8 +101,8 @@ onUnmounted(() => {
                         description="Nach der Deaktivierung müssen Sie sich bei jedem Login erneut mit Ihrem Passwort anmelden."
                     />
                     <Button variant="destructive" as-child class="self-start">
-                        <Link :href="route('two-factor.disable')" method="delete">
-                            <SafetyCheckOffOutline />
+                        <Link :href="twoFactor.disable()" method="delete">
+                            <IconMaterialSymbolsSafetyCheckOffOutline />
                             Deaktivieren
                         </Link>
                     </Button>

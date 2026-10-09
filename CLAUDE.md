@@ -18,8 +18,9 @@
 - Vite
 - Tailwind CSS v4
 - shadcn/vue
-- Material Symbols & Icons (as font) 
-- Ziggy
+- unplugin-vue-components: auto-imports components from `resources/js/components` + `resources/js/layouts` (no explicit imports needed)
+- Material Symbols via unplugin-icons (auto-imported as `<IconMaterialSymbols... />`)
+- Laravel Wayfinder
 - ESLint
 
 **Services**
@@ -133,7 +134,7 @@ final class UserController
 
 **Path Aliases**:
 - `@/*` → `./resources/js/*`
-- `ziggy-js` → Vendor
+- `@/types/wayfinder/*` → Wayfinder routes/actions (generated, `wayfinder:generate --path=resources/js/types/wayfinder --with-form`)
 
 **Component Structure**:
 ```vue

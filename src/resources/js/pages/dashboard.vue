@@ -1,16 +1,14 @@
 <script setup lang="ts">
 
-import { Heading } from "@/components";
-import { Spinner } from "@/components/ui/spinner";
-import AppLayout from "@/layouts/AppLayout.vue";
 import { type BreadcrumbItem } from "@/types";
+import { dashboard } from "@/types/wayfinder/routes";
 
 const title = "Dashboard";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: title,
-        href: route("dashboard"),
+        href: dashboard.url(),
     },
 ];
 

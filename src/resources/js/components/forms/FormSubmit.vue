@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 import { InertiaForm } from "@inertiajs/vue3";
 import { inject } from "vue";
 

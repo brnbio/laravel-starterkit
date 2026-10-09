@@ -260,12 +260,12 @@ describe('two factor authentication', function () {
         /** @var User $user */
         $user = User::factory()->create();
         $this->actingAs($user);
-        $response = $this->get(route('account.2fa'));
+        $response = $this->get(route('account.two-factor'));
         $response->assertOk();
     });
 
     test('guests cannot view the 2fa page', function () {
-        $response = $this->get(route('account.2fa'));
+        $response = $this->get(route('account.two-factor'));
         $response->assertRedirect(route('login'));
     });
 });

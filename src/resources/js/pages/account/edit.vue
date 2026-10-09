@@ -1,22 +1,15 @@
 <script setup lang="ts">
 
-import { HeadingSmall } from "@/components";
-import { FormControl, FormPassword, FormProvider } from "@/components/forms";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog";
-import { FieldGroup, FieldSet } from "@/components/ui/field";
-import { Separator } from "@/components/ui/separator";
-import { Spinner } from "@/components/ui/spinner";
-import { AccountLayout, AppLayout } from "@/layouts";
 import { type BreadcrumbItem } from "@/types";
 import { Link, useForm, usePage } from "@inertiajs/vue3";
+import account from "@/types/wayfinder/routes/account";
 
 const title = "Mein Konto";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: title,
-        href: route("account.edit"),
+        href: account.edit.url(),
     },
 ];
 
@@ -31,11 +24,11 @@ const deleteAccountForm = useForm({
     password: "",
 });
 
-const submit = () => form.patch(route("account.update"), {
+const submit = () => form.patch(account.update.url(), {
     preserveState: false,
 });
 
-const deleteAccount = () => deleteAccountForm.delete(route("account.destroy"));
+const deleteAccount = () => deleteAccountForm.delete(account.destroy.url());
 
 </script>
 

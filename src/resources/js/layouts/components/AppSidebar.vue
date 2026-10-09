@@ -1,14 +1,13 @@
 <script setup lang="ts">
 
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { AppLogo } from "@/layouts/components";
 import { type NavItem } from "@/types";
 import { Link } from "@inertiajs/vue3";
+import { dashboard } from "@/types/wayfinder/routes";
 
 const mainNavItems: NavItem[] = [
     {
         title: "Dashboard",
-        href: route("dashboard")
+        href: dashboard.url()
     },
 ];
 
@@ -32,7 +31,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="route('dashboard')">
+                        <Link :href="dashboard()">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>

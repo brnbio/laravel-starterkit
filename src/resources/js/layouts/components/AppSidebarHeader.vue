@@ -1,14 +1,10 @@
 <script setup lang="ts">
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useInitials } from "@/composables/useInitials";
-import { Breadcrumbs } from "@/layouts/components/index";
 import type { BreadcrumbItemType } from "@/types";
-import { AccountBoxOutline, Logout } from "@brnbio/vue-material-design-icons";
 import { Link, usePage } from "@inertiajs/vue3";
+import account from "@/types/wayfinder/routes/account";
+import { logout } from "@/types/wayfinder/routes";
 
 withDefaults(
     defineProps<{
@@ -58,15 +54,15 @@ const { getInitials } = useInitials();
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem as-child>
-                        <Link :href="route('account.edit')" class="flex w-full cursor-pointer items-center gap-2">
-                            <AccountBoxOutline />
+                        <Link :href="account.edit()" class="flex w-full cursor-pointer items-center gap-2">
+                            <IconMaterialSymbolsAccountBoxOutline />
                             Mein Konto
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem as-child>
-                        <Link :href="route('logout')" method="post" class="flex w-full items-center gap-2">
-                            <Logout />
+                        <Link :href="logout()" method="post" class="flex w-full items-center gap-2">
+                            <IconMaterialSymbolsLogout />
                             Logout
                         </Link>
                     </DropdownMenuItem>
