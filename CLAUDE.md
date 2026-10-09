@@ -3,97 +3,85 @@
 ## Tech Stack
 
 **Backend**
-- PHP 8.4
-- Laravel v12
-- Inertia.js v2
-- Laravel Fortify
-- Spatie Media Library
-- Pest v5
-- PHPStan (max level)
-- Pint with Larastan
+- PHP 8.5
+- Laravel 13
+- Inertia.js 3
+- Laravel Fortify 1
+- Laravel Wayfinder
+- Spatie Media Library 11
+- Pest 5 (+ Type Coverage plugin)
+- PHPStan level max via Larastan 3
+- Pint
+- Laravel Debugbar 4 (dev)
 
 **Frontend**
-- Vue 3 (Composition API)
-- TypeScript (strict)
-- Vite
-- Tailwind CSS v4
-- shadcn/vue
+- Vue 3 (Composition API) + TypeScript 6 (strict)
+- Vite 8
+- Tailwind CSS 4
+- shadcn/vue (reka-ui) in `resources/js/components/ui`
 - unplugin-vue-components: auto-imports components from `resources/js/components` + `resources/js/layouts` (no explicit imports needed)
 - Material Symbols via unplugin-icons (auto-imported as `<IconMaterialSymbols... />`)
-- Laravel Wayfinder
-- ESLint
+- ESLint 10
 
-**Services**
+**Services** (Docker via Laravel Sail)
 - MySQL 8.0
 - MinIO (S3)
 - Mailpit
 
 ## Development Workflow
 
-### 🚨 Core Rules
+The Docker/Sail setup (`compose.yml`, `Makefile`, `docker/`) lives in the project root; the Laravel app lives in `src/`.
 
-1. **Execute all commands from project root** - NEVER `cd src/`
-2. **Use Laravel Sail for all commands** - No direct host commands
-3. **Use Makefile** - `make test` instead of `./vendor/bin/sail test`
-4. **Check code quality** - `make precommit` before every commit
+- Run everything from the project root — never `cd src/`.
+- Never run `php`, `composer`, `artisan` or `npm` directly on the host; everything runs inside the Sail container.
+- Use the `make` targets. Only if there is no target, call Sail from the root (e.g. `sail artisan make:model Example -m`, `sail test --filter=UserTest`).
+- Run `make precommit` before every commit.
 
-### Make Commands
+**Make targets** (run `make` without target for the list):
 
-**Container**:
-```bash
-make up / down / restart
-```
-
-**Development**:
-```bash
-make dev         # Vite Dev Server
-make refresh     # DB reset with Seeds
-```
-
-**Code Quality**:
-```bash
-make pint        # PHP Code Formatter
-make phpstan     # Static Analysis
-make eslint      # Frontend Linter
-make test        # Pest Tests
-make precommit   # All Checks
-```
+| Target | Purpose |
+| --- | --- |
+| `make up` / `down` / `restart` | Container lifecycle |
+| `make install` | Fresh install (env, composer, npm, key, migrate + seed) |
+| `make dev` | Vite dev server |
+| `make refresh` | `migrate:fresh --seed` |
+| `make pint` | Format PHP (fixes in place) |
+| `make phpstan` | Static analysis |
+| `make eslint` | Lint frontend (fixes in place) |
+| `make test` | Pest tests |
+| `make precommit` | Pint, PHPStan, 100% type coverage, 100% code coverage, composer + npm audit, ESLint |
 
 ## Project Structure
 
 ```
 src/
-├── app/                     # PHP Code (Models, Controllers, etc.)
-├── resources/js/            # Frontend Code
-│   ├── components/          # Vue Components
-│   │   └── ui/              # UI Components
-│   ├── composables/         # Vue Composables
-│   ├── layouts/             # Inertia Layouts
-│   ├── pages/               # Inertia Pages
-│   ├── types/               # TypeScript Types
+├── app/                     # PHP code (Models, Controllers, Requests, Providers)
+├── resources/js/
+│   ├── components/          # Vue components (ui/ = shadcn/vue, don't edit by hand)
+│   ├── composables/         # Vue composables
+│   ├── layouts/             # Inertia layouts
+│   ├── pages/               # Inertia pages
+│   ├── types/               # TypeScript types (wayfinder/ + components.d.ts are generated)
 │   └── lib/                 # Utilities
-├── routes/                  # Laravel Routes
-├── database/                # Migrations, Seeders
-├── tests/                   # Pest Tests
-└── config/                  # Configuration
+├── routes/
+├── database/                # Migrations, factories, seeders
+├── tests/                   # Pest tests (Feature/, Unit/)
+└── config/
 ```
 
 ## Code Guidelines
 
+Formatting is enforced by tooling — `src/pint.json` and `src/eslint.config.js` are the source of truth. Run `make pint` / `make eslint` instead of formatting by hand.
+
 ### Backend (PHP)
 
-**Standards**: Laravel PER • Strict Types • 100% Type Coverage • PHPStan Level max
+- `declare(strict_types=1);` in every file (including tests)
+- Complete type hints for parameters, return types and closures — 100% type coverage is required
+- PHPStan level max must pass
+- PHPDoc only for information the types can't express
+- Use helper functions where one exists: `inertia()`, `auth()`, `view()`, `redirect()`, `response()`, `request()`, `route()`, `session()`, `config()`, `cache()`. Facades are only allowed when no helper exists (e.g. `RateLimiter`, `Password`, `Date`, `Route`).
+- Inertia page names are lowercase paths (`users/index`, not `Users/Index`)
 
-**Rules**:
-- `declare(strict_types=1);` in every file
-- Short Array Syntax `[]`
-- Single Quotes `'string'`
-- Complete Type Hints (Parameters + Return Types)
-- PHPDoc only for additional information
-- **Helper functions over Facades**: `inertia()`, `auth()`, `view()`, `redirect()`, `response()`, `request()`, `route()`, `session()`, `config()`, `cache()`
-- Inertia Page Names lowercase (e.g. `users/index` instead of `Users/Index`)
-
-**Example**:
 ```php
 <?php
 
@@ -101,116 +89,50 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
+use Inertia\Response;
+
 final class UserController
 {
-    public function index()
+    public function index(): Response
     {
-        // ✅ Use helpers
         return inertia('users/index', [
             'user' => auth()->user(),
-            'config' => config('app.name'),
         ]);
     }
 
-    public function store()
+    public function store(): RedirectResponse
     {
-        // ✅ Not: Auth::user(), Config::get(), Redirect::route()
         return redirect()->route('users.index');
     }
 }
 ```
 
+### Project Conventions & Gotchas
+
+- **All classes are `final`.**
+- **Dates are immutable** (`Date::use(CarbonImmutable::class)`): `$date->addDay()` returns a new instance — always use the return value.
+- **Strict models** (`Model::shouldBeStrict()` in local env): lazy loading, missing attributes and silently discarded attributes throw. Relationships are eager loaded automatically (`Model::automaticallyEagerLoadRelationships()`), so explicit `with()` is usually unnecessary.
+- **Validation lives in Form Requests** (`app/Http/Requests/...`), not inline in controllers.
+- **Auth split**: Fortify handles login and two-factor auth (views registered in `FortifyServiceProvider`); registration and password reset live in `AuthController`. Don't reimplement either side.
+- **Flash messages**: use `flash('...')` (laracasts/flash) in the backend; they reach the frontend as the shared `flash` prop from `HandleInertiaRequests`.
+- **API resources are unwrapped** (`JsonResource::withoutWrapping()`): no `data` key.
+- **TypeScript model types** in `resources/js/types/models` are maintained by hand — update them whenever a model's attributes or relations change.
+- `Number` formatting uses locale `de` and currency `EUR`, while the app locale is `en`.
+
 ### Frontend (Vue/TypeScript)
 
-**Standards**: TypeScript strict • Vue 3 Composition API • ESLint
+- Always `<script setup lang="ts">`, block order `<script>` → `<template>` → `<style>`
+- Typed props and emits via `defineProps<Props>()` / `defineEmits<...>()`
+- Components from `components/` and `layouts/` and icons are auto-imported — don't import them explicitly (Inertia components like `Link`/`Head` still need an import)
+- Path alias `@/*` → `resources/js/*`
+- Use Wayfinder for URLs instead of hardcoded paths (`@/types/wayfinder/routes`, `@/types/wayfinder/actions`)
 
-**ESLint Rules**:
-- Block Order: `<script>` → `<template>` → `<style>`
-- Always `<script setup lang="ts">`
-- 4 Spaces Indentation
-- Object Spacing: `{ foo: 'bar' }`
-- Max 8 attributes inline, otherwise 1 per line
-- Empty line between blocks
-
-**Path Aliases**:
-- `@/*` → `./resources/js/*`
-- `@/types/wayfinder/*` → Wayfinder routes/actions (generated, `wayfinder:generate --path=resources/js/types/wayfinder --with-form`)
-
-**Component Structure**:
 ```vue
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { Link } from '@inertiajs/vue3'
 import type { User } from '@/types'
-
-interface Props {
-    user: User
-    isActive?: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-    isActive: false
-})
-
-const count = ref<number>(0)
-
-function handleClick(): void {
-    count.value++
-}
-</script>
-
-<template>
-    <div class="example">
-        <h1>{{ user.name }}</h1>
-        <button @click="handleClick">Count: {{ count }}</button>
-    </div>
-</template>
-
-<style scoped>
-/* Styles */
-</style>
-```
-
-**Composables**:
-```typescript
-import { ref, type Ref } from 'vue'
-
-export function useExample() {
-    const state: Ref<string> = ref('')
-
-    function updateState(value: string): void {
-        state.value = value
-    }
-
-    return { state, updateState }
-}
-```
-
-**Types**:
-```typescript
-export interface User {
-    id: number
-    name: string
-    email: string
-}
-```
-
-## Inertia.js Workflow
-
-**Controller → Vue**:
-```php
-public function index()
-{
-    return inertia('users/index', [
-        'users' => User::all()
-    ]);
-}
-```
-
-**Vue Page** (`resources/js/pages/users/index.vue`):
-```vue
-<script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3'
-import type { User } from '@/types'
+import { index } from '@/types/wayfinder/routes/users'
 
 interface Props {
     users: User[]
@@ -220,73 +142,46 @@ defineProps<Props>()
 </script>
 
 <template>
-    <Head title="Users" />
-
-    <Link href="/users">Users</Link>
+    <AppLayout title="Users">
+        <Link :href="index.url()">Users</Link>
+    </AppLayout>
 </template>
 ```
 
+### Wayfinder
+
+TypeScript routes and actions are generated by the Vite plugin (`make dev` / build) into `resources/js/types/wayfinder` with form variants enabled. Never edit these files by hand.
+
 ## Testing
 
-**Pest PHP**:
+- Pest tests for every PHP change; `make precommit` requires 100% code and type coverage
+- Feature tests use `describe()` / `test()` with factories and `Pest\Laravel` functions
+- Tests run against the MySQL `testing` database (created by `docker/create-testing-database.sh`, refreshed via `RefreshDatabase`) — deliberately not SQLite, so MySQL-specific behaviour and side effects surface in tests. The `db` container must be running.
+
 ```php
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
+use Inertia\Testing\AssertableInertia as Assert;
 
-it('creates a user', function (): void {
-    $user = User::factory()->create();
-    expect($user)->toBeInstanceOf(User::class);
+use function Pest\Laravel\actingAs;
+
+describe('dashboard', function (): void {
+
+    test('authenticated users can visit the dashboard', function (): void {
+        actingAs(User::factory()->create())
+            ->get(route('dashboard'))
+            ->assertOk()
+            ->assertInertia(fn (Assert $page): Assert => $page->component('dashboard'));
+    });
 });
-```
-
-**Commands**:
-```bash
-make test                                      # All Tests
-./vendor/bin/sail test --filter=UserTest      # Specific Test
-```
-
-## Common Artisan Commands
-
-```bash
-./vendor/bin/sail artisan make:model Example -m       # Model + Migration
-./vendor/bin/sail artisan make:controller UserController
-./vendor/bin/sail artisan migrate
-make refresh                                           # DB reset + seed
 ```
 
 ## Environment
 
-**Important .env Variables**:
-```bash
-APP_PORT=80
-VITE_PORT=5173
-DB_HOST=db                  # Docker Service Name
-AWS_ENDPOINT=http://s3:9000 # MinIO
-MAIL_HOST=mailpit           # Mailpit (localhost:8025)
-```
-
-**Debugging**:
-- Laravel Debugbar enabled (Development)
-- Xdebug via `SAIL_XDEBUG_MODE` in `.env`
-
-## Claude Code Notes
-
-**Workflow**:
-- Use Makefile commands (`make test`, `make precommit`)
-- Execute all commands from project root (NEVER `cd src/`)
-- `make precommit` before every commit
-
-**Code Generation**:
-- PHP: `declare(strict_types=1);`, complete Type Hints, PHPStan Level max, Helper functions instead of Facades
-- Vue: `<script setup lang="ts">`, typed Props/Emits
-- Follow Pint/ESLint rules strictly
-
-**Testing**:
-- Pest tests for all PHP changes
-- 100% Type Coverage required
-- `make test` before commits
-
-**File Paths**:
-- Backend: `src/app/...`
-- Frontend: `src/resources/js/...`
+- Service hosts inside Docker: `DB_HOST=db`, `AWS_ENDPOINT=http://s3:9000`, `MAIL_HOST=mailpit`
+- App on `APP_PORT` (default 80), Vite on `VITE_PORT` (default 5173) — defaults come from `compose.yml`
+- Mailpit UI: http://localhost:8025 · MinIO console: http://localhost:8900
+- Xdebug via `SAIL_XDEBUG_MODE` in the root `.env`; Laravel Debugbar is enabled in development
