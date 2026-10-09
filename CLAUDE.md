@@ -8,7 +8,7 @@
 - Inertia.js v2
 - Laravel Fortify
 - Spatie Media Library
-- Pest v4
+- Pest v5
 - PHPStan (max level)
 - Pint with Larastan
 

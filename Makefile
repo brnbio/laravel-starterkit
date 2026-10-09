@@ -64,7 +64,7 @@ precommit: # Run all pre-commit checks
 	$(SAIL) pint
 	$(SAIL) bin phpstan analyse --memory-limit=2G --no-progress --no-interaction
 	$(SAIL) pest --type-coverage --compact --min=100
-	$(SAIL) test --compact
+	$(SAIL) test --compact --coverage
 	$(SAIL) composer audit --format=plain --no-interaction
 	$(SAIL) npm audit --audit-level=high
 	$(SAIL) npm run lint
